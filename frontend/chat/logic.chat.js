@@ -42,7 +42,7 @@ socket.on("new_message", (data) => {
 });
 async function allUsers() {
   try {
-    const response = await fetch("/allusers");
+    const response = await fetch("/api/allusers");
     if(!response.ok){ 
       throw new Error (`Response error : ${response.status}`)
     }
