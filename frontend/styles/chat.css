@@ -1,128 +1,245 @@
-/* Общие стили */
-.logo {
-  display: block;
-  margin: 1rem auto;
-  max-width: 100px;
+/* --- 1. Глобальні налаштування та шрифт --- */
+:root {
+    --bg-color: #f6f2eb;       /* Твій основний фон */
+    --accent-color: #d8c3aa;   /* Твій основний колір кнопок */
+    --accent-hover: #c6ad92;   /* Колір при наведенні */
+    --text-color: #333;
+    --sidebar-bg: #ffffff;
+    --border-color: #e0e0e0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Geologica", sans-serif; /* Твій шрифт */
 }
 
 body {
-  margin: 0;
-  padding-bottom: 3.5rem; /* место под форму чата */
-  font-family: "Geologica", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 496;
-  font-style: normal;
-  font-variation-settings: "slnt" 0, "CRSV" 0, "SHRP" 0;
-  background-color: #f6f2eb;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-.userProfile avatar {
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;    
+    height: 100vh;
+    display: flex;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
 }
 
-/* Список сообщений */
-#messages {
-  list-style-type: none;
-  margin: 0;
-  padding: 1rem;
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+/* --- 2. ЛІВА ПАНЕЛЬ (Sidebar) --- */
+.sidebar {
+    width: 350px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Сообщения */
-#messages li {
-  padding: 0.5rem 1rem;
-  margin-bottom: 0.5rem;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  word-break: break-word;
+/* Шапка сайдбару */
+.sidebar-header {
+    padding: 15px;
+    background: var(--bg-color); /* Фон як у всього сайту */
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-#messages li:nth-child(odd) {
-  background: #efefef;
+.my-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-/* Форма чата */
-#formChat {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-top: 1px solid #ddd;
-  box-sizing: border-box;
-  backdrop-filter: blur(10px);
-  z-index: 10;
+.my-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent-color); /* Обводка аватара твоїм кольором */
 }
 
-/* Поле ввода */
+.logo-small {
+    height: 24px;
+}
+
+/* Пошук */
+.search-bar {
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+    background: #fafafa;
+    font-family: "Geologica", sans-serif;
+}
+
+/* Список користувачів */
+.users-list {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.user-item:hover {
+    background-color: #fafafa;
+}
+
+.user-item.active {
+    background-color: #eae0d5; /* Світла версія твого коричневого */
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #ddd;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #000;
+}
+
+.user-last-msg {
+    font-size: 13px;
+    color: #888;
+    margin-top: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+/* --- 3. ПРАВА ПАНЕЛЬ (Чат) --- */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-color); /* Твій фірмовий бежевий фон */
+    position: relative;
+}
+
+.chat-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    height: 60px;
+    background: #fff; /* Шапка біла, щоб виділялась */
+}
+
+.chat-header-info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+/* Зона повідомлень */
+.messages-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    /* Прибираємо картинку фону, залишаємо твій колір */
+    background-color: var(--bg-color); 
+}
+
+/* Бульбашки повідомлень */
+.message {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    font-size: 15px;
+    line-height: 1.4;
+    position: relative;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Вхідні (Білі) */
+.msg-in {
+    align-self: flex-start;
+    background: white;
+    border-bottom-left-radius: 2px;
+    color: #333;
+}
+
+/* Твої повідомлення (Твій колір Whitty) */
+.msg-out {
+    align-self: flex-end;
+    background: var(--accent-color); /* #d8c3aa */
+    color: #000; /* Чорний текст читається краще на бежевому */
+    border-bottom-right-radius: 2px;
+}
+
+/* --- 4. ЗОНА ВВОДУ --- */
+.chat-input-area {
+    padding: 15px;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 #input {
-  flex: 1;
-  padding: 0.5rem 1rem;
-  margin-right: 0.5rem;
-  border: none;
-  border-radius: 2rem;
-  outline: none;
-  background: #fff;
-  font-size: 1rem;
+    flex: 1;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 15px;
+    font-family: "Geologica", sans-serif;
 }
 
-/* Кнопка отправки */
-#formChat > button {
-  background: #d8c3aa;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  color: #000;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
+#input:focus {
+    border-color: var(--accent-color);
 }
 
-#formChat > button:hover {
-  background: #c6ad92;
+button {
+    background: var(--accent-color); /* #d8c3aa */
+    color: #000;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: "Geologica", sans-serif;
+    transition: 0.2s;
 }
 
-/* Кнопка профиля */
-#profile {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: #d8c3aa;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 20;
+button:hover {
+    background: var(--accent-hover); /* #c6ad92 */
 }
 
-#profile:hover {
-  background: #c6ad92;
-}
-
-/* Адаптив */
-@media (max-width: 600px) {
-  #input {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
-  #formChat > button {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
-  #profile {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
-  }
+.no-chat-selected {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100%; 
+    color: #888;
+    font-size: 1.2rem;
 }

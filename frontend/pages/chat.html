@@ -1,40 +1,64 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Whitty chat</title>
-    <link rel="stylesheet" href="/styles/chat.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geologica:wght@496&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <p>
-      <a href="http://localhost:8080/feed">
-        <img
-          src="/uploads/imgSite/W Font Letter-fotor-bg-remover-20250915145631.png"
-          alt="Whitty"
-          class="logo"
-        />
-      </a>
-    </p>
-    <div id="userProfile">
-      <img id="avatar" src="" alt="avatar" width="40" height="40" />
-      <span id="username"></span>
-    </div>
-    <ul id="messages"></ul>
-    <form id="formChat" action="">
-      <input id="input" autocomplete="off" placeholder="Type message..." />
-      <button>Send</button>
-    </form>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whitty Messenger</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/chat.css">
+</head>
+<body>
 
-    <button id="profile">Profile</button>
-    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js" defer></script>
-    <script src="/chat/logic.chat.js" defer></script> 
+    <div class="sidebar">
+        <div class = "online-users" id = "online-users"></div>
+        <div class="sidebar-header" id="profileBtn">
+            <div class="my-profile">
+                <img id="avatar" src="" alt="Me" class="my-avatar"> 
+                <span id="username" style="font-weight: bold;">Loading...</span>
+            </div>
+            <img src="/uploads/imgSite/W Font Letter-fotor-bg-remover-20250915145631.png" class="logo-small" alt="Logo">
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search users...">
+        </div>
+
+        <div class="users-list" id="usersList">
+            <div class="user-item">
+                <div class="user-avatar" style="background: #ccc"></div>
+                <div class="user-info">
+                    <span class="user-name">Loading users...</span>
+                    <span class="user-last-msg">Please wait</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-area">
+        
+        <div class="chat-header">
+            <img id="chatAvatar" src="" class="user-avatar" style="width: 35px; height: 35px; display: none;">
+            <div class="chat-header-info">
+                <span id="chatWithTitle" style="font-weight: bold; font-size: 16px;">Select a chat to start messaging</span>
+                </div>
+        </div>
+
+        <ul id="messages" class="messages-container">
+            </ul>
+
+        <form id="formChat" class="chat-input-area" action="">
+            <input id="input" autocomplete="off" placeholder="Write a message..." />
+            <button>Send</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script src="/chat/logic.chat.js"></script> 
+    
     <script>
-      document.getElementById("profile").addEventListener("click", function () {
-        window.location.href = "/profile";
-      });
+        document.getElementById("profileBtn").addEventListener("click", function () {
+            window.location.href = "/profile";
+        });
     </script>
-  </body>
+</body>
 </html>
