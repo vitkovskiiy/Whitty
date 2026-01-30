@@ -25,11 +25,6 @@ socket.on("new_message", (data) => {
   avatarImg.height = 30;
   avatarImg.style.borderRadius = "50%";
   avatarImg.style.marginRight = "8px";
-<<<<<<< HEAD
-  
-=======
-
->>>>>>> 11d6d873405e18326df6d861a00c67908e6307e5
   const usernameSpan = document.createElement("span");
   usernameSpan.textContent = data.username + ": ";
   usernameSpan.style.fontWeight = "common";
@@ -51,8 +46,15 @@ async function allUsers() {
       throw new Error (`Response error : ${response.status}`)
     }
     const users = await response.json();
-    console.log(users);
-    return users;
+    users.forEach((user) => {
+      const userElement = document.createElement("div");
+      userElement.classList.add("user-item");
+      userElement.innerHTML = `
+        <img src="${user.avatar || "/avatars/default.jpg"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 10px;">
+        <span class="username">${user.username}</span>
+      `;
+      userListContainer.appendChild(userElement);
+    });
   } catch (e) {
     console.log(e + "error on handle all users");
   }

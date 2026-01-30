@@ -11,13 +11,8 @@ const jwt = require("jsonwebtoken");
 const prisma = require("./repositories/index");
 
 // Імпорт роутів
-<<<<<<< HEAD
-const authRoutes = require("./routes/auth"); 
-const avatarRouter = require("./routes/avatarUpload.router");
-=======
 const authRoutes = require("./routes/auth");
 const avatarRouter = require("./routes/upload.router");
->>>>>>> 11d6d873405e18326df6d861a00c67908e6307e5
 const { requireAuth } = require("./middleware/authMiddleware");
 const postRouter = require("../src/routes/post.router");
 const countryRouter = require("../src/routes/country.router");
