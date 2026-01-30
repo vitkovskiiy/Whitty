@@ -13,7 +13,7 @@ const prisma = require("./repositories/index");
 
 // Імпорт роутів
 const authRoutes = require("./routes/auth"); 
-const avatarRouter = require("./routes/upload.router");
+const avatarRouter = require("./routes/avatarUpload.router");
 const { requireAuth } = require("./middleware/authMiddleware");
 const postRouter = require("../src/routes/post.router")
  
@@ -39,10 +39,8 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use(express.static(path.join(__dirname, "../js"))); 
 
 
-app.use("/api", postRouter)
+app.use("/api", postRouter, avatarRouter)
 app.use("/auth", authRoutes);
-app.use("/api", avatarRouter);
-
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public/login.html"));
