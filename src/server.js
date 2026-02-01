@@ -36,13 +36,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+app.use("/avatars",express.static(path.join(__dirname, "../uploads/avatars")));
 app.use(express.static(path.join(__dirname, "../js")));
 
-app.use("/api", postRouter);
+app.use("/api", postRouter,allUsersRouter,countryRouter, avatarRouter);
 app.use("/auth", authRoutes);
-app.use("/api", avatarRouter);
-app.use("/api", countryRouter);
-app.use("/api", allUsersRouter);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public/login.html"));
