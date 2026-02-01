@@ -32,8 +32,7 @@ socket.on("new_message", (data) => {
   const textSpan = document.createElement("span");
   textSpan.textContent = data.message;
 
-  messageElement.appendChild(avatarImg);
-  messageElement.appendChild(statusOnline);
+  messageElement.appendChild(avatarImg);  
   messageElement.appendChild(usernameSpan);
   messageElement.appendChild(textSpan);
 

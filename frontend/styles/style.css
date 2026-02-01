@@ -1,4 +1,4 @@
-/* Общие стили */
+@import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300;600;900&display=swap');/* Общие стили */
 .logo {
   display: block;
   margin: 2rem auto 1rem auto;

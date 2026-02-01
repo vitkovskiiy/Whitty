@@ -1,0 +1,525 @@
+
+body {
+  margin: 0;
+  font-family: "Geologica", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 496;
+  font-style: normal;
+  font-variation-settings: "slnt" 0, "CRSV" 0, "SHRP" 0;
+  background-color: #f6f2eb; 
+  height: 100vh;
+  color: #231a15
+}
+.logo {
+  display: block;
+  margin: 2rem auto 1rem auto;
+  max-width: 100px;
+}
+#profile-pic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #f7f3eb;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+/* Кнопка профиля */
+#profile {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #d8c3aa;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#profile:hover {
+  background: #c6ad92;
+}
+/* Затемненный фон */
+    .modal-overlay {
+        display: none; /* Скрыто по умолчанию */
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный */
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Белое окно по центру */
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Крестик закрытия */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #aaa;
+    }
+    .close-btn:hover { color: #000; }
+
+    /* Элементы формы */
+    #postContent {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .submit-btn:hover { background-color: #0056b3; }
+
+    .post-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  max-width: 600px; /* Обмежимо ширину */
+  margin-left: auto; 
+  margin-right: auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: auto; /* Відштовхує дату вправо */
+}
+
+.date {
+  color: #888;
+  font-size: 0.8em;
+}
+
+.post-image img {
+  width: 100%; /* Картинка на всю ширину картки */
+  border-radius: 4px;
+  margin-top: 10px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+#news {
+  text-align: center;
+}
+
+#profileLink {
+  background: #d8c3aa; /* мягкий бежево-коричневый */
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+  
+}
+
+/* Общие стили */
+.logo {
+  display: block;
+  margin: 2rem auto 1rem auto;
+  max-width: 100px;
+}
+#profile-pic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #f7f3eb;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+/* Кнопка профиля */
+#profile {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #d8c3aa;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#profile:hover {
+  background: #c6ad92;
+}
+/* Затемненный фон */
+    .modal-overlay {
+        display: none; /* Скрыто по умолчанию */
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный */
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Белое окно по центру */
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Крестик закрытия */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #aaa;
+    }
+    .close-btn:hover { color: #000; }
+
+    /* Элементы формы */
+    #postContent {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .submit-btn:hover { background-color: #0056b3; }
+
+    .post-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  max-width: 600px; /* Обмежимо ширину */
+  margin-left: auto; 
+  margin-right: auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: auto; /* Відштовхує дату вправо */
+}
+
+.date {
+  color: #888;
+  font-size: 0.8em;
+}
+
+.post-image img {
+  width: 100%; /* Картинка на всю ширину картки */
+  border-radius: 4px;
+  margin-top: 10px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+#news {
+  text-align: center;
+}
+
+#profileLink {
+  background: #d8c3aa; /* мягкий бежево-коричневый */
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+  
+}
+
+
+/* Общие стили */
+.logo {
+  display: block;
+  margin: 2rem auto 1rem auto;
+  max-width: 100px;
+}
+#profile-pic {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.profile-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #f7f3eb;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Затемненный фон */
+    .modal-overlay {
+        display: none; /* Скрыто по умолчанию */
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный черный */
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Белое окно по центру */
+    .modal-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 400px;
+        max-width: 90%;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Крестик закрытия */
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #aaa;
+    }
+    .close-btn:hover { color: #000; }
+
+    /* Элементы формы */
+    #postContent {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .submit-btn:hover { background-color: #0056b3; }
+
+    .post-card {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  max-width: 600px; /* Обмежимо ширину */
+  margin-left: auto; 
+  margin-right: auto;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.avatar-small {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  margin-right: auto; /* Відштовхує дату вправо */
+}
+
+.date {
+  color: #888;
+  font-size: 0.8em;
+}
+
+.post-image img {
+  width: 100%; /* Картинка на всю ширину картки */
+  border-radius: 4px;
+  margin-top: 10px;
+  max-height: 500px;
+  object-fit: cover;
+}
+
+#news {
+  text-align: center;
+}
+
+#profileLink {
+  background: #d8c3aa; /* мягкий бежево-коричневый */
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: #000;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+  
+}
+
+button {
+  font-family: "Geologica", sans-serif;
+  font-size: 20px;
+  background: #d8c3aa;
+  color: white;
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+button span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+button svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+button:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+button:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+button:hover span {
+  transform: translateX(5em);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+
+
