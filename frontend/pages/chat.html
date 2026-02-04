@@ -30,6 +30,7 @@
                     <span class="user-name">Loading users...</span>
                     <span class="user-last-msg">Please wait</span>
                 </div>
+            </div id = "allusersDiv"></div>
             </div>
         </div>
     </div>
@@ -53,7 +54,7 @@
     </div>
 
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
-    <script src="/chat/logic.chat.js"></script> 
+    <script src="/chat/logic.chat.js" defer></script> 
     
     <script>
         document.getElementById("profileBtn").addEventListener("click", function () {

@@ -7,6 +7,7 @@ const formChat = document.getElementById("formChat");
 const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 const userListContainer = document.getElementById("usersList");
+const allUsersListContainter = document.getElementById("allUsersDiv")
 
 socket.on("connect", () => {
   console.log("Connected to chat server");
@@ -34,25 +35,26 @@ socket.on("new_message", (data) => {
   textSpan.textContent = data.message;
 
   messageElement.appendChild(avatarImg);
-  messageElement.appendChild(statusOnline);
   messageElement.appendChild(usernameSpan);
   messageElement.appendChild(textSpan);
 
   document.getElementById("messages").appendChild(messageElement);
 });
-async function allUsers() {
-  try {
-    const response = await fetch("/api/allusers");
-    if(!response.ok){ 
-      throw new Error (`Response error : ${response.status}`)
+  async function allUsers() {
+    try {
+      const response = await fetch("/api/allusers");
+      if(!response.ok){ 
+        throw new Error (`Response error : ${response.status}`)
+      }
+      const users = await response.json();
+      
+      users.forEach(user => {
+        allUsersListContainter.innerHTML += `<div class = "user-item">${user.username}</div>`;
+      });
+    } catch (e) {
+      console.log(e + "error on handle all users");
     }
-    const users = await response.json();
-    console.log(users);
-    return users;
-  } catch (e) {
-    console.log(e + "error on handle all users");
   }
-}
 
 formChat.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -63,5 +65,4 @@ formChat.addEventListener("submit", (e) => {
     input.value = "";
   }
 });
-
 allUsers();
