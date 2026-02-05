@@ -8,14 +8,17 @@ const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 const userListContainer = document.getElementById("usersList");
 const allUsersListContainter = document.getElementById("allUsersDiv")
+const loadingPlaceholder = document.getElementById("loadingPlaceholder");
 
 socket.on("connect", () => {
   console.log("Connected to chat server");
 });
+
 socket.on("user_info", (data) => {
   document.getElementById("username").textContent = data.username;
   document.getElementById("avatar").src = data.avatar || "/imgSite/default.jpg";
 });
+
 socket.on("new_message", (data) => {
   const messageElement = document.createElement("li");
   const avatarImg = document.createElement("img");
@@ -40,6 +43,8 @@ socket.on("new_message", (data) => {
 
   document.getElementById("messages").appendChild(messageElement);
 });
+
+
   async function allUsers() {
     try {
       const response = await fetch("/api/allusers");
@@ -47,9 +52,19 @@ socket.on("new_message", (data) => {
         throw new Error (`Response error : ${response.status}`)
       }
       const users = await response.json();
-      
-      users.forEach(user => {
-        allUsersListContainter.innerHTML += `<div class = "user-item">${user.username}</div>`;
+      if (loadingPlaceholder){
+        loadingPlaceholder.style.display = "none";
+      }
+      allUsersListContainter.innerHTML = "";
+
+      users.forEach((user) => {
+        const userDiv = document.createElement("div");
+        userDiv.classList.add("user-item");
+        userDiv.innerHTML = `
+          <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
+          <span class="username">${user.username}</span>
+        `;
+        allUsersListContainter.appendChild(userDiv);
       });
     } catch (e) {
       console.log(e + "error on handle all users");

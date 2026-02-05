@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whitty Messenger</title>
+    <title>Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/chat.css">
 </head>
@@ -24,16 +24,16 @@
         </div>
 
         <div class="users-list" id="usersList">
-            <div class="user-item">
-                <div class="user-avatar" style="background: #ccc"></div>
-                <div class="user-info">
-                    <span class="user-name">Loading users...</span>
-                    <span class="user-last-msg">Please wait</span>
-                </div>
-            </div id = "allusersDiv"></div>
-            </div>
+    <div id="loadingPlaceholder" class="user-item">
+        <div class="user-avatar" style="background: #ccc"></div>
+        <div class="user-info">
+            <span class="user-name">Loading users...</span>
+            <span class="user-last-msg">Please wait</span>
         </div>
     </div>
+
+    <div id="allUsersDiv"></div>
+</div>
 
     <div class="chat-area">
         
