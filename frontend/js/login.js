@@ -1,7 +1,6 @@
 const form = document.getElementById("loginInput");
-const loginField = document.getElementById("loginL");
-const passwordField = document.getElementById("passwordL");
-const modal = document.getElementById('postModal');
+const loginField = document.getElementById("username");
+const passwordField = document.getElementById("password");
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
