@@ -17,6 +17,7 @@ const { requireAuth } = require("./middleware/authMiddleware");
 const postRouter = require("../src/routes/post.router");
 const countryRouter = require("../src/routes/country.router");
 const allUsersRouter = require("../src/routes/allUsers.router")
+const conversationRouter = require("./routes/createConversation");
 
 dotenv.config();
 const port = process.env.PORT;
@@ -38,11 +39,9 @@ app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use(express.static(path.join(__dirname, "../js")));
 
-app.use("/api", postRouter);
+app.use("/api", postRouter,countryRouter,allUsersRouter,avatarRouter);
 app.use("/auth", authRoutes);
-app.use("/api", avatarRouter);
-app.use("/api", countryRouter);
-app.use("/api", allUsersRouter);
+app.use("/chat", conversationRouter)
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public/login.html"));

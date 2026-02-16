@@ -5,7 +5,8 @@ const router = express.Router();
 router.get("/allusers", async (req, res) => {
   const response = await prisma.user.findMany({
     select: {
-      username: true
+      username: true,
+      user_id: true
     },
   });
   res.send(response);
