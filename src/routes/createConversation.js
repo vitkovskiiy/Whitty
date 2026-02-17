@@ -9,34 +9,29 @@ router.post("/create-conversation", async (req, res) => {
   const parse = jwt.decode(coockies);
   const myID = parse.id;
 
-console.log("partner id:", partner_id);
-console.log("My id:", myID);
-
-  
   try {
     const existingConversation = await prisma.conversation.findFirst({
       where: {
-          AND: {
-            participants: { some: { user_id: parseInt(myID) }},
-            participants: { some: { user_id: parseInt(partner_id) }}
-          }
+        AND: {
+          participants: { some: { user_id: parseInt(myID) } },
+          participants: { some: { user_id: parseInt(partner_id) } },
+        },
       },
       include: {
         participants: true,
+        messages: true,
       },
     });
     if (existingConversation) {
-      return res
-        .status(400)
-        .json({
-          message: "Conversation already exists!",
-          conversation: existingConversation,
-        });
+      return res.status(400).json({
+        message: "Conversation already exists!",
+        conversation: existingConversation,
+      });
     } else {
       const conversation = await prisma.conversation.create({
         data: {
           participants: {
-            connect: [{ user_id: myID }, { user_id: partner_id}],
+            connect: [{ user_id: myID }, { user_id: partner_id }],
           },
         },
         include: {

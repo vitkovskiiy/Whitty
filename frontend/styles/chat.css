@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Geologica:wght@300;600;900&display=swap');/* --- 1. Глобальні налаштування та шрифт --- */
 :root {
-    --bg-color: #f6f2eb;       /* Твій основний фон */
-    --accent-color: #d8c3aa;   /* Твій основний колір кнопок */
-    --accent-hover: #c6ad92;   /* Колір при наведенні */
+    --bg-color: #f6f2eb;       
+    --accent-color: #d8c3aa;   
+    --accent-hover: #c6ad92;   
     --text-color: #333;
     --sidebar-bg: #ffffff;
     --border-color: #e0e0e0;
@@ -12,17 +12,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Geologica", sans-serif; /* Твій шрифт */
+    font-family: "Geologica", sans-serif;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    overflow: hidden;
+    /* Убираем отсюда display: flex, чтобы body был просто оберткой */
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Чтобы не было двойного скролла */
 }
-
 /* --- 2. ЛІВА ПАНЕЛЬ (Sidebar) --- */
 .sidebar {
     width: 350px;
@@ -40,6 +38,14 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.main-container {
+    display: flex;            /* Вот это ставит сайдбар и чат в ряд */
+    height: 100vh;            /* На всю высоту окна */
+    width: 100vw;             /* На всю ширину */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
 }
 
 .my-profile {

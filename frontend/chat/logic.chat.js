@@ -4,12 +4,14 @@ const socket = io("http://localhost:8080", {
 });
 
 const formChat = document.getElementById("formChat");
-const input = document.getElementById("input");
 const messages = document.getElementById("messages");
 const userListContainer = document.getElementById("usersList");
 const allUsersListContainter = document.getElementById("allUsersDiv");
 const loadingPlaceholder = document.getElementById("loadingPlaceholder");
 const startChatBtn = document.getElementById("user-item");
+const input = document.getElementById("inputMessage")
+const content = input.value;
+console.log(content);
 socket.on("connect", () => {
   console.log("Connected to chat server");
 });
@@ -81,6 +83,11 @@ async function allUsers() {
     console.log(e + "error on handle all users");
   }
 }
+
+document.getElementById('formChat').addEventListener('submit', async function (event){
+    event.preventDefault();
+
+})
 
 formChat.addEventListener("submit", (e) => {
   e.preventDefault();

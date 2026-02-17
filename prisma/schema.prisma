@@ -5,6 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      =  DATABASE_URL
 }
 
 model User {
@@ -39,6 +40,7 @@ model Conversation {
 
   participants User[]    @relation("ChatParticipants")
   messages     Message[]
+  @@map("conversation")
 }
 
 model Message {
@@ -54,6 +56,7 @@ model Message {
 
   receiverId Int
   receiver   User @relation("Receiver", fields: [receiverId], references: [user_id])
+  @@map("message")
 }
 
 model Country {
