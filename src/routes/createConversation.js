@@ -1,10 +1,14 @@
 const express = require("express");
+const jwt = require("jsonwebtoken");
 const prisma = require("../repositories/index");
 const router = express.Router();
 
 router.post("/create-conversation", async (req, res) => {
   const { partner_id } = req.body;
-  const myID = req.user.id;
+  const coockies = req.cookies.jwt;
+  const parse = jwt.decode(coockies);
+  const myID = parse.id;
+
 console.log("partner id:", partner_id);
 console.log("My id:", myID);
 
@@ -32,7 +36,7 @@ console.log("My id:", myID);
       const conversation = await prisma.conversation.create({
         data: {
           participants: {
-            connect: [{ user_id: req.user.id }, { user_id: Number(user_id) }],
+            connect: [{ user_id: myID }, { user_id: partner_id}],
           },
         },
         include: {

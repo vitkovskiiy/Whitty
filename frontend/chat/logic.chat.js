@@ -70,7 +70,7 @@ async function allUsers() {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                  partner_id: user.user_id,
+                  partner_id: user.user_id
                 })
               })
              } catch (e) { throw new Error ("Failed when created a chat")}

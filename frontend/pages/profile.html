@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -12,15 +12,16 @@
       rel="stylesheet"
     />
     <style>
-      
       .modal {
         position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0, 0, 0, 0.5);
       }
       .modal.hidden {
         display: none;
@@ -57,35 +58,37 @@
       <h1>Your Profile</h1>
       <p>Welcome, <span id="username"></span></p>
       <button id="logout-button">Logout</button>
-      <button>
-  <div class="svg-wrapper-1">
-    <div class="svg-wrapper">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width="24"
-        height="24"
-      >
-        <path fill="none" d="M0 0h24v24H0z"></path>
-        <path
-          fill="currentColor"
-          d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-        ></path>
-      </svg>
-    </div>
-  </div>
-  <span>Send</span>
-</button>
-      <button id="feed-button">News Feed 📰</button>
+      <button id="chat-button">
+        <div class="svg-wrapper-1">
+          <div class="svg-wrapper">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+            >
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path
+                fill="currentColor"
+                d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+        <span>Send</span>
+      </button>
+      <button type="button" id="feed-button">News Feed 📰</button>
 
-     
-      <img id="profile-pic" src="/uploads/imgSite/default.jpg" alt="Profile Picture" width="300" />
-      
-    
+      <img
+        id="profile-pic"
+        src="/uploads/imgSite/default.jpg"
+        alt="Profile Picture"
+        width="300"
+      />
+
       <button id="set-avatar-btn">Set avatar</button>
     </div>
 
-   
     <div id="avatar-modal" class="modal hidden">
       <div class="modal-content">
         <span id="close-modal">&times;</span>
@@ -96,115 +99,139 @@
         </form>
       </div>
     </div>
-    <div class="country-section" style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px;">
-    <h3>🌍 Your Region</h3>
-    
-    <p>Current country: <strong id="current-country-display">Not selected</strong></p>
+    <div
+      class="country-section"
+      style="
+        margin-top: 20px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      "
+    >
+      <h3>🌍 Your Region</h3>
 
-    <label for="countrySelect">Change country:</label>
-    <select id="countrySelect" style="padding: 5px; margin-right: 10px;">
+      <p>
+        Current country:
+        <strong id="current-country-display">Not selected</strong>
+      </p>
+
+      <label for="countrySelect">Change country:</label>
+      <select id="countrySelect" style="padding: 5px; margin-right: 10px">
         <option value="">Loading...</option>
-    </select>
-    
-    <button id="saveCountryBtn" style="padding: 5px 10px; cursor: pointer;">Save</button>
-</div>
+      </select>
 
-    <button id="openPostModalBtn" style="margin-top: 20px; padding: 10px 20px; cursor: pointer;">
-    ➕ Create New Post
-</button>
+      <button id="saveCountryBtn" style="padding: 5px 10px; cursor: pointer">
+        Save
+      </button>
+    </div>
 
-<div id="postModal" class="modal-overlay">
-    <div class="modal-content">
+    <button
+      id="openPostModalBtn"
+      style="margin-top: 20px; padding: 10px 20px; cursor: pointer"
+    >
+      ➕ Create New Post
+    </button>
+
+    <div id="postModal" class="modal-overlay">
+      <div class="modal-content">
         <span class="close-btn" id="closePostModalBtn">&times;</span>
         <h2>Create a Post</h2>
-        
-        <form id="createPostForm" action="">
-            <textarea id="postContent" name="content" placeholder="What's on your mind?" rows="4"></textarea>
-            
-            <div class="file-input-wrapper">
-                <label for="postImage">Attach Image:</label>
-                <input type="file" id="postImage" name="image" accept="image/*">
-            </div>
 
-            <button type="submit" class="submit-btn">Publish Post</button>
+        <form id="createPostForm" action="">
+          <textarea
+            id="postContent"
+            name="content"
+            placeholder="What's on your mind?"
+            rows="4"
+          ></textarea>
+
+          <div class="file-input-wrapper">
+            <label for="postImage">Attach Image:</label>
+            <input type="file" id="postImage" name="image" accept="image/*" />
+          </div>
+
+          <button type="submit" class="submit-btn">Publish Post</button>
         </form>
+      </div>
     </div>
-</div>
 
     <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
     <script src="/chat/logic.chat.js"></script>
     <script src="/js/post.js"></script>
     <script>
-      const countrySelect = document.getElementById('countrySelect');
-const saveCountryBtn = document.getElementById('saveCountryBtn');
-const currentCountryDisplay = document.getElementById('current-country-display');
+      const countrySelect = document.getElementById("countrySelect");
+      const saveCountryBtn = document.getElementById("saveCountryBtn");
+      const currentCountryDisplay = document.getElementById(
+        "current-country-display",
+      );
 
-async function initCountrySettings() {
-    try {
-        const res = await fetch('/api/countries'); 
-        const countries = await res.json();
-        countrySelect.innerHTML = '<option value="">-- Select Country --</option>';
+      async function initCountrySettings() {
+        try {
+          const res = await fetch("/api/countries");
+          const countries = await res.json();
+          countrySelect.innerHTML =
+            '<option value="">-- Select Country --</option>';
 
-        countries.forEach(c => {
-            const option = document.createElement('option');
+          countries.forEach((c) => {
+            const option = document.createElement("option");
             option.value = c.country_id;
             option.textContent = c.country_name;
             countrySelect.appendChild(option);
-        });
+          });
 
-       
-        const userRes = await fetch('/auth/me'); 
-        if (userRes.ok) {
+          const userRes = await fetch("/auth/me");
+          if (userRes.ok) {
             const user = await userRes.json();
-            
+
             if (user.country) {
-                currentCountryDisplay.textContent = user.country.country_name;
-                countrySelect.value = user.country.country_id;
+              currentCountryDisplay.textContent = user.country.country_name;
+              countrySelect.value = user.country.country_id;
             } else {
-                currentCountryDisplay.textContent = "Not set";
+              currentCountryDisplay.textContent = "Not set";
             }
+          }
+        } catch (err) {
+          console.error("Error loading country data:", err);
         }
+      }
+      initCountrySettings();
 
-    } catch (err) {
-        console.error("Error loading country data:", err);
-    }
-}
+      saveCountryBtn.addEventListener("click", async () => {
+        const selectedId = countrySelect.value;
 
-saveCountryBtn.addEventListener('click', async () => {
-    const selectedId = countrySelect.value;
-    
-    if (!selectedId) return alert("Please select a country!");
+        if (!selectedId) return alert("Please select a country!");
 
-    try {
-        const res = await fetch('/api/update-country', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ country_id: selectedId })
-        });
+        try {
+          const res = await fetch("/api/update-country", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ country_id: selectedId }),
+          });
 
-        if (res.ok) {
+          if (res.ok) {
             const data = await res.json();
             currentCountryDisplay.textContent = data.user.country.country_name;
             alert("✅ Country updated successfully!");
-        } else {
+          } else {
             alert("❌ Error updating country");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Something went wrong");
         }
-    } catch (err) {
-        console.error(err);
-        alert("Something went wrong");
-    }
-});
-
-
+      });
 
       document
         .getElementById("logout-button")
         .addEventListener("click", function () {
+          console.log("work");
           window.location.href = "/logout";
+          
         });
       document
         .getElementById("chat-button")
         .addEventListener("click", function () {
+          console.log("work");
           window.location.href = "/chat";
         });
 
@@ -217,13 +244,19 @@ saveCountryBtn.addEventListener('click', async () => {
       const closeBtnAvatar = document.getElementById("close-modal");
       const profilePic = document.getElementById("profile-pic");
       const formAvatar = document.getElementById("avatarForm");
-      document.getElementById("feed-button").addEventListener("click", function () {
-  
-  window.location.href = "/feed";
-      });
+      const feedButton = document.getElementById("feed-button");
+       
 
-      openBtnAvatar.addEventListener("click", () => modalAvatar.classList.remove("hidden"));
-      closeBtnAvatar.addEventListener("click", () => modalAvatar.classList.add("hidden"));
+       feedButton.addEventListener("click", function () {
+          console.log("clicked")
+          window.location.href = "/feed";
+        });
+      openBtnAvatar.addEventListener("click", () =>
+        modalAvatar.classList.remove("hidden"),
+      );
+      closeBtnAvatar.addEventListener("click", () =>
+        modalAvatar.classList.add("hidden"),
+      );
 
       formAvatar.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -245,7 +278,6 @@ saveCountryBtn.addEventListener('click', async () => {
           alert("Ошибка загрузки: " + err.message);
         }
       });
-      initCountrySettings();
     </script>
 
     <script type="module">
@@ -262,6 +294,5 @@ saveCountryBtn.addEventListener('click', async () => {
       }
       loadCurrentAvatar();
     </script>
-    
   </body>
 </html>
