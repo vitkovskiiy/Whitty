@@ -10,6 +10,8 @@ const allUsersListContainter = document.getElementById("allUsersDiv");
 const loadingPlaceholder = document.getElementById("loadingPlaceholder");
 const startChatBtn = document.getElementById("user-item");
 const input = document.getElementById("inputMessage")
+const messageContainer = document.getElementById("messages-container")
+
 const content = input.value;
 console.log(content);
 socket.on("connect", () => {
@@ -75,7 +77,20 @@ async function allUsers() {
                   partner_id: user.user_id
                 })
               })
-             } catch (e) { throw new Error ("Failed when created a chat")}
+              const responseData = await response.json();
+              const conversationId = responseData.conversationId
+              const fetchMessages = await fetch(`/chat/messages/${conversationId}`)
+              console.log(fetchMessages)
+              const responseFetch = await fetchMessages.json(); 
+              console.log(responseFetch);
+              const respins = responseFetch.forEach((m) => {
+                 console.log(m.text);
+              });
+             
+              const newMesssage = document.createElement("li");
+             } catch (e) { 
+              throw new Error ("Failed when created a chat")
+            }
         })
       allUsersListContainter.appendChild(userDiv);
     });

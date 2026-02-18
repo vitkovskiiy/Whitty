@@ -18,6 +18,7 @@ const postRouter = require("../src/routes/post.router");
 const countryRouter = require("../src/routes/country.router");
 const allUsersRouter = require("../src/routes/allUsers.router")
 const conversationRouter = require("./routes/createConversation");
+const chatMessagesRouter = require("../src/routes/chatMessage.router")
 
 dotenv.config();
 const port = process.env.PORT;
@@ -42,7 +43,7 @@ app.use(express.static(path.join(__dirname, "../js")));
 
 app.use("/api", postRouter,countryRouter,allUsersRouter,avatarRouter);
 app.use("/auth", authRoutes);
-app.use("/chat", conversationRouter)
+app.use("/chat", conversationRouter,chatMessagesRouter)
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public/login.html"));
