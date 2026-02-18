@@ -10,7 +10,6 @@ const allUsersListContainter = document.getElementById("allUsersDiv");
 const loadingPlaceholder = document.getElementById("loadingPlaceholder");
 const startChatBtn = document.getElementById("user-item");
 const input = document.getElementById("inputMessage")
-const messageContainer = document.getElementById("messages-container")
 
 const content = input.value;
 console.log(content);
@@ -78,16 +77,22 @@ async function allUsers() {
                 })
               })
               const responseData = await response.json();
-              const conversationId = responseData.conversationId
-              const fetchMessages = await fetch(`/chat/messages/${conversationId}`)
-              console.log(fetchMessages)
+              const conversationId = responseData.conversationId;
+              const fetchMessages = await fetch(`/chat/messages/${conversationId}`);
               const responseFetch = await fetchMessages.json(); 
-              console.log(responseFetch);
               const respins = responseFetch.forEach((m) => {
-                 console.log(m.text);
-              });
+                  const newMesssage = document.createElement("li");
+                  const userInfo = document.createElement("span")
+                  newMesssage.textContent = m.text;
+                  userInfo.innerHTML = `
+          <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
+          <span class="username">${user.username}</span>
+        `;
+              messages.appendChild(userInfo);          
+              messages.appendChild(newMesssage);          
+          });
              
-              const newMesssage = document.createElement("li");
+              
              } catch (e) { 
               throw new Error ("Failed when created a chat")
             }
