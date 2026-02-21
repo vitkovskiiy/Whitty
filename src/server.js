@@ -120,16 +120,13 @@ io.on("connection", (socket) => {
     username: socket.data.username,
     avatar: socket.data.avatar,
   });
-
-  socket.on("sendMessage", (msg) => {
+  
+  socket.on("sendMessage", (data) => {
     const username = socket.data.username;
     const isOnline = Array.from(onlineUsers.keys()).includes(username);
-
-    io.emit("new_message", {
-      username: socket.data.username,
-      avatar: socket.data.avatar,
-      message: msg,
-      isOnline,
+    socket.join(data.conversationId)
+    io.to(data.conversationId).emit("new_message", {
+      message: data.message,
     });
   });
 

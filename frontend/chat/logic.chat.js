@@ -2,17 +2,21 @@ const socket = io("http://localhost:8080", {
   transports: ["websocket"],
   withCredentials: true,
 });
-
+//chat from
 const formChat = document.getElementById("formChat");
+const input = document.getElementById("inputMessage");
 const messages = document.getElementById("messages");
+const headerChat = document.getElementById("chat-header")
+//load users
 const userListContainer = document.getElementById("usersList");
 const allUsersListContainter = document.getElementById("allUsersDiv");
 const loadingPlaceholder = document.getElementById("loadingPlaceholder");
 const startChatBtn = document.getElementById("user-item");
-const input = document.getElementById("inputMessage")
+const headerChatTitle = document.getElementById("chatWithTitle");
 
-const content = input.value;
-console.log(content);
+//create an object that we send in socket
+let data = {};
+
 socket.on("connect", () => {
   console.log("Connected to chat server");
 });
@@ -38,10 +42,7 @@ socket.on("new_message", (data) => {
 
   const textSpan = document.createElement("span");
   textSpan.textContent = data.message;
-
-  messageElement.appendChild(avatarImg);  
-  messageElement.appendChild(avatarImg);
-  messageElement.appendChild(usernameSpan);
+ messageElement.appendChild(avatarImg);
   messageElement.appendChild(textSpan);
 
   document.getElementById("messages").appendChild(messageElement);
@@ -67,36 +68,39 @@ async function allUsers() {
           <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
           <span class="username">${user.username}</span>
         `;
-        userDiv.addEventListener("click",async ()=> {
-             try {
-              const response = await fetch("create-conversation", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                  partner_id: user.user_id
-                })
-              })
-              const responseData = await response.json();
-              const conversationId = responseData.conversationId;
-              const fetchMessages = await fetch(`/chat/messages/${conversationId}`);
-              const responseFetch = await fetchMessages.json(); 
-              const respins = responseFetch.forEach((m) => {
-                  const newMesssage = document.createElement("li");
-                  const userInfo = document.createElement("span")
-                  newMesssage.textContent = m.text;
-                  userInfo.innerHTML = `
+      userDiv.addEventListener("click", async () => {
+        try {
+          const response = await fetch("create-conversation", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              partner_id: user.user_id,
+            }),
+          });
+          const responseData = await response.json();
+          const conversationId = responseData.conversation.id;
+          const fetchMessages = await fetch(`/chat/messages/${conversationId}`);
+          const responseFetch = await fetchMessages.json();
+          data.conversationId = conversationId;
+          const respins = responseFetch.forEach((m) => {
+            const newMesssage = document.createElement("li");
+            const userInfo = document.createElement("span");
+            newMesssage.textContent = m.text;
+            userInfo.innerHTML = `
           <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
           <span class="username">${user.username}</span>
         `;
-              messages.appendChild(userInfo);          
-              messages.appendChild(newMesssage);          
+          
+            messages.appendChild(newMesssage);
+            headerChatTitle.innerHTML = `<img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
+          <span class="username">${user.username}</span>
+        `;
+            headerChatTitle.textContent = user.username;
           });
-             
-              
-             } catch (e) { 
-              throw new Error ("Failed when created a chat")
-            }
-        })
+        } catch (e) {
+          throw new Error("Failed when created a chat");
+        }
+      });
       allUsersListContainter.appendChild(userDiv);
     });
   } catch (e) {
@@ -104,17 +108,24 @@ async function allUsers() {
   }
 }
 
-document.getElementById('formChat').addEventListener('submit', async function (event){
-    event.preventDefault();
-
-})
-
-formChat.addEventListener("submit", (e) => {
+formChat.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (input.value) {
-    socket.emit("sendMessage", input.value);
-    console.log("Message sent :", input.value);
-    const messageElement = document.createElement("div");
+    data.message = input.value;
+    console.log(data);
+    socket.emit("sendMessage", data);
+    console.log("Message sent :", data.conversationId, data.message);
+    const message = document.createElement("div");
+    const response = await fetch(`/chat/messages/${data.conversationId}`, {
+      method: "POST",
+      headers: {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      },
+    });
+
     input.value = "";
   }
 });
