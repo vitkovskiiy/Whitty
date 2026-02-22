@@ -1,4 +1,4 @@
-# Whitty — Social Network Backend
+# Whitty — Fullstack Social Network 
 
 Whitty is a social network platform designed to demonstrate advanced database concepts, including ACID transactions, pessimistic locking, complex analytical queries, and integration testing with isolated environments.
 
@@ -100,69 +100,4 @@ itssayzy@Ivans-MacBook-Air Whitty % npx jest --version
 ```
 npm run test:integration
 ```
-## 📂 Project Structure
 
-```text
-Whitty/
-│
-├── .env                    # (ports,db connect ...etc)
-├── .env.test               # for test files fake DB (second DB for tests)
-├── .gitignore              # 
-├── package.json            # 
-├── README.md               # Describe my proj (how to install and setup)
-│
-├── docs/                   # my documentation
-│   ├── queries.md          # Examples of SQL queries (from easy to hard)
-│   └── schema.md           # this describe schema DB
-│
-├── prisma/                 # ORM
-│   ├── schema.prisma       # Models (User,Post,Comment, ... etc)
-│   └── migrations/         # Migrations(History of some changes in DB)
-│
-├── src/                    # Backend   
-│   ├── server.js           # server side of backend this file make our prod work
-│   │
-│   ├── generated/          # its auto-gen file from prisma
-│   │   └── prisma/         
-│   │
-│   ├── middleware/         # its some verify files to (verify something)
-│   │   ├── authMiddleware.js      #  verify JWT 
-│   │   └── postFileMiddleware.js  # upload image for post with Multer
-│   │
-│   ├── repositories/       # connect to db 
-│   │   └── index.js        # prisma client
-│   │
-│   └── routes/             # routes (api)
-│       ├── auth.js         # registration, login, /me(profile_info), countries
-│       ├── post.router.js  # posts, likes, comments (/api)
-│       └── upload.router.js # upload avatars
-│
-├── frontend/               # Frontend
-│   ├── public/             # Public pages (u can direct here if u dont auth)
-│   │   ├── login.html      # page for login
-│   │   ├── register.html.  # page for register
-│   │   └── feed.html       # page for feed
-│   │
-│   ├── pages/              # Secured pages(need auth for direct here)
-│   │   ├── profile.html
-│   │   └── chat.html
-│   │
-│   ├── styles/             # Style css
-│   │   └── style.css
-│   │
-│   └── js/                 # Frontend js
-│       ├── api.js          # func getCurrentUser();
-│       ├── feed.js         # feed,likes,comments logic
-│       ├── post.js         # make post
-│       └── chat/
-│           └── logic.chat.js # chat's logic
-│
-├── uploads/                # Storage
-│   ├── avatars/            # user's avatar_img
-│   ├── posts/              # post's img
-│   └── imgSite/            # Logo and some default pic
-│
-└── test/                   # Test
-    └── integration/
-        ├── test_Whitty.test.js # Test functional side of Whitty
-```
