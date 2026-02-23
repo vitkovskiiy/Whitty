@@ -113,7 +113,7 @@ formChat.addEventListener("submit", async (e) => {
   if (input.value) {
     data.message = input.value;
     console.log(data);
-    socket.emit("sendMessage", data);
+    socket.emit("sendMessage", data.message);
     console.log("Message sent :", data.conversationId, data.message);
     const message = document.createElement("div");
     const response = await fetch(`/chat/messages/${data.conversationId}`, {
