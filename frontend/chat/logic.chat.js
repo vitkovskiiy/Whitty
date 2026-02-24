@@ -77,27 +77,22 @@ async function allUsers() {
           });
           const responseData = await response.json();
           const conversationId = responseData.conversation.id;
-          const fetchMessages = await fetch(`/chat/messages/${conversationId}`);
-          const responseFetch = await fetchMessages.json();
+          const chatMessages = responseData.conversation.messages;
           data.conversationId = conversationId;
+
           messages.innerHTML = "";
-          const respins = responseFetch.forEach((m) => {
+
+          const parseMessages = chatMessages.forEach((m) => {
             const newMesssage = document.createElement("li");
-            const userInfo = document.createElement("span");
-            newMesssage.textContent = m.text;
-            userInfo.innerHTML = `
-          <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
-          <span class="username">${user.username}</span>
-        `;
-          
-            messages.appendChild(newMesssage);
-            headerChatTitle.innerHTML = `<img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
-          <span class="username">${user.username}</span>
-        `;
-            headerChatTitle.textContent = user.username;
-          });
+            newMesssage.innerHTML = `
+               <img src="${user.avatar || "/uploads/imgSite/default.png"}" class="avatar" width="30" height="30" style="border-radius: 50%; margin-right: 8px;">
+               <span class="username" style="font-weight: bold;">${user.username}: </span>
+               <span>${m.text}</span>
+               `;
+                   messages.appendChild(newMesssage);
+             });
         } catch (e) {
-          throw new Error("Failed when created a chat");
+          throw new Error(e);
         }
       });
       allUsersListContainter.appendChild(userDiv);
