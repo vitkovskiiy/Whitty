@@ -18,23 +18,29 @@ router.get("/messages/:conversationId", async (req, res) => {
 });
 
 router.post("/messages/:conversationId", async(req,res)=>{
-   const conversationID = req.params.conversationId;
+   const conversationId = req.params.conversationId;
    const cookies = req.cookies.jwt;
    const parse = jwt.decode(cookies);
    const myID = parse.id;
-   const data = req.body;
-   console.log(req);
+   const data = req.body.message;
+   console.log(data, myID, conversationId);
    try {
-       const createMessage = prisma.message.create({
+       const createMessage = await prisma.message.create({
         data: {
-          conversationId: conversationID,
           text: data,
-          senderId: myID,
+          sender: {
+            connect: { user_id: myID }
+          },
+          conversation: {
+            connect: { id: conversationId }
+          }
         }
+
      })
+     res.status(200).json("Message delivered successfully")
      
    } catch (error) {
-    throw new Error("Something happend when try to send message")
+    console.log(error)
   }
   
 })

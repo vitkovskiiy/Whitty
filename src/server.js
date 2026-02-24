@@ -124,9 +124,10 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
     const username = socket.data.username;
     const isOnline = Array.from(onlineUsers.keys()).includes(username);
+    console.log(data);
     socket.join(data.conversationId)
     io.to(data.conversationId).emit("new_message", {
-      message: data.message,
+      message: data,
     });
   });
 

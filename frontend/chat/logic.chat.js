@@ -30,7 +30,6 @@ socket.on("new_message", (data) => {
   const messageElement = document.createElement("li");
   const avatarImg = document.createElement("img");
   avatarImg.src = data.avatar || "/avatars/default.jpg";
-  avatarImg.alt = "User Avatar";
   avatarImg.classList.add("avatar");
   avatarImg.width = 30;
   avatarImg.height = 30;
@@ -62,7 +61,6 @@ async function allUsers() {
 
     users.forEach((user) => {
       const userDiv = document.createElement("div");
-      console.log("ДАННЫЕ ЮЗЕРА:", user);
       userDiv.classList.add("user-item");
       userDiv.innerHTML = `
           <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
@@ -82,6 +80,7 @@ async function allUsers() {
           const fetchMessages = await fetch(`/chat/messages/${conversationId}`);
           const responseFetch = await fetchMessages.json();
           data.conversationId = conversationId;
+          messages.innerHTML = "";
           const respins = responseFetch.forEach((m) => {
             const newMesssage = document.createElement("li");
             const userInfo = document.createElement("span");
@@ -113,20 +112,19 @@ formChat.addEventListener("submit", async (e) => {
   if (input.value) {
     data.message = input.value;
     console.log(data);
-    socket.emit("sendMessage", data.message);
+    socket.emit("sendMessage", data);
     console.log("Message sent :", data.conversationId, data.message);
     const message = document.createElement("div");
     const response = await fetch(`/chat/messages/${data.conversationId}`, {
       method: "POST",
-      headers: {
-        headers: {
-          "Content-Type": "application/json",
+      headers: { 
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
-      },
-    });
+      });
+      input.value = "";
+    }
+  });
 
-    input.value = "";
-  }
-});
+    
 allUsers();

@@ -54,8 +54,8 @@ model Message {
   senderId Int
   sender   User @relation("Sender", fields: [senderId], references: [user_id]) 
 
-  receiverId Int
-  receiver   User @relation("Receiver", fields: [receiverId], references: [user_id])
+  receiverId Int?
+  receiver   User? @relation("Receiver", fields: [receiverId], references: [user_id])
   @@map("message")
 }
 
