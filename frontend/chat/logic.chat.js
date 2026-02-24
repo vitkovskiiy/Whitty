@@ -84,7 +84,9 @@ async function allUsers() {
 
           const parseMessages = chatMessages.forEach((m) => {
             const newMesssage = document.createElement("li");
-            newMesssage.innerHTML = `
+            console.log(m);
+            if()
+              newMesssage.innerHTML = `
                <img src="${user.avatar || "/uploads/imgSite/default.png"}" class="avatar" width="30" height="30" style="border-radius: 50%; margin-right: 8px;">
                <span class="username" style="font-weight: bold;">${user.username}: </span>
                <span>${m.text}</span>

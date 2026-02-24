@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   const handleUnauthorized = () => {
-    if (retaq.originalUrl.startsWith("/api") || req.originalUrl.startsWith("/auth")) {
-      return res.status(401).json({ message: "Not authorized" });
+    if (req.originalUrl.startsWith("/api") || req.originalUrl.startsWith("/auth")) {
+      return res.status(401).json({ message: "Please autorize yourself" });
     } else {
       return res.redirect("/login");
     }
