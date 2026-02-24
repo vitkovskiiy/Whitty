@@ -1,14 +1,14 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const prisma = require("../repositories/index");
 const router = express.Router();
+const {requireAuth} = require("../middleware/authMiddleware")
 
-router.post("/create-conversation", async (req, res) => {
+router.post("/create-conversation",requireAuth, async (req, res) => {
   const { partner_id } = req.body;
-  const coockies = req.cookies.jwt;
-  const parse = jwt.decode(coockies);
-  const myID = parse.id;
-
+  const myID = req.user.id;
+   if(parseInt(partner_id) === parseInt(myID)){ 
+    return res.status(403).send('You cant create conversation with yourself')
+  }
   try {
     const existingConversation = await prisma.conversation.findFirst({
       where: {
@@ -23,7 +23,7 @@ router.post("/create-conversation", async (req, res) => {
       },
     });
     if (existingConversation) {
-      return res.status(400).json({
+      return res.status(200).json({
         message: "Conversation already exists!",
         conversation: existingConversation,
       });
@@ -31,7 +31,7 @@ router.post("/create-conversation", async (req, res) => {
       const conversation = await prisma.conversation.create({
         data: {
           participants: {
-            connect: [{ user_id: myID }, { user_id: partner_id }],
+            connect: [{ user_id: parseInt(myID) }, { user_id: parseInt(partner_id) }],
           },
         },
         include: {

@@ -2,8 +2,9 @@ const express = require("express");
 const prisma = require("../repositories/index");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const {requireAuth} = require("../middleware/authMiddleware")
 
-router.get("/messages/:conversationId", async (req, res) => {
+router.get("/messages/:conversationId", requireAuth, async (req, res) => {
   const conversationId = req.params.conversationId;
   try {
     const messages = await prisma.message.findMany({
@@ -17,13 +18,10 @@ router.get("/messages/:conversationId", async (req, res) => {
   }
 });
 
-router.post("/messages/:conversationId", async(req,res)=>{
+router.post("/messages/:conversationId",requireAuth, async(req,res)=>{
    const conversationId = req.params.conversationId;
-   const cookies = req.cookies.jwt;
-   const parse = jwt.decode(cookies);
-   const myID = parse.id;
    const data = req.body.message;
-   console.log(data, myID, conversationId);
+   const myID = req.user.id;
    try {
        const createMessage = await prisma.message.create({
         data: {
