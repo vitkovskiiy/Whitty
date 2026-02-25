@@ -33,21 +33,26 @@ socket.on("new_message", (data) => {
   const messageElement = document.createElement("li");
   const avatarImg = document.createElement("img");
   avatarImg.src = data.avatar || "/avatars/default.jpg";
-  avatarImg.classList.add("avatar");
-  avatarImg.width = 30;
-  avatarImg.height = 30;
-  avatarImg.style.borderRadius = "50%";
-  avatarImg.style.marginRight = "8px";
+  avatarImg.classList.add("msg-out");
   const usernameSpan = document.createElement("span");
   usernameSpan.textContent = data.username + ": ";
   usernameSpan.style.fontWeight = "common";
+  
+  const time = new Date().toLocaleTimeString();
+  console.log(time);
 
-  const textSpan = document.createElement("span");
+  const textSpan = document.createElement("li");
   textSpan.textContent = data.message;
-  messageElement.appendChild(avatarImg);
-  messageElement.appendChild(textSpan);
+  messageElement.classList.add("msg-out")
+ 
+  messageElement.innerHTML = `
+                <span class="msg-out">${textSpan.textContent}</span>
+                <img src="${avatarImg.src|| "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar-right" width="30" height="30" style="border-radius: 50%; margin-left: 8px;">
+              `;
+  
 
-  document.getElementById("messages").appendChild(messageElement);
+  messages.appendChild(messageElement);
+  messages.scrollTop = messages.scrollHeight;
 });
 
 const fetchMyId = async function () {
@@ -100,6 +105,7 @@ async function allUsers() {
             newMesssage.innerHTML = `<span>${m.text}</span>`;
             messages.appendChild(newMesssage);
           });
+          messages.scrollTop = messages.scrollHeight;
         } catch (e) {
           console.error("Ошибка при открытии чата:", e);
         }
@@ -116,11 +122,8 @@ formChat.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (input.value) {
     data.message = input.value;
-    console.log("data:", data);
     socket.emit("sendMessage", data);
-    console.log("Message sent :", data.conversationId, data.message);
-    const message = document.createElement("div");
-    console.log(data);
+    
     if (data.conversationId !== null) {
       const response = await fetch(`/chat/messages/${data.conversationId}`, {
         method: "POST",

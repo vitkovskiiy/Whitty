@@ -16,12 +16,11 @@
 }
 
 body {
-    /* Убираем отсюда display: flex, чтобы body был просто оберткой */
+    
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Чтобы не было двойного скролла */
+    overflow: hidden; 
 }
-/* --- 2. ЛІВА ПАНЕЛЬ (Sidebar) --- */
 .sidebar {
     width: 350px;
     background: var(--sidebar-bg);
@@ -30,19 +29,24 @@ body {
     flex-direction: column;
 }
 
-/* Шапка сайдбару */
+#messages {
+  list-style-type: none; 
+  padding: 10;
+
+}
+
 .sidebar-header {
     padding: 15px;
-    background: var(--bg-color); /* Фон як у всього сайту */
+    background: var(--bg-color); 
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .main-container {
-    display: flex;            /* Вот это ставит сайдбар и чат в ряд */
-    height: 100vh;            /* На всю высоту окна */
-    width: 100vw;             /* На всю ширину */
+    display: flex;            
+    height: 100vh;            
+    width: 100vw;           
     background-color: var(--bg-color);
     color: var(--text-color);
     overflow: hidden;
@@ -61,14 +65,14 @@ body {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid var(--accent-color); /* Обводка аватара твоїм кольором */
+    border: 2px solid var(--accent-color);
 }
 
 .logo-small {
     height: 24px;
 }
 
-/* Пошук */
+
 .search-bar {
     padding: 10px;
     border-bottom: 1px solid var(--border-color);
@@ -84,7 +88,7 @@ body {
     font-family: "Geologica", sans-serif;
 }
 
-/* Список користувачів */
+
 .users-list {
     flex: 1;
     overflow-y: auto;
@@ -104,7 +108,7 @@ body {
 }
 
 .user-item.active {
-    background-color: #eae0d5; /* Світла версія твого коричневого */
+    background-color: #eae0d5; 
 }
 
 .user-avatar {
@@ -137,12 +141,12 @@ body {
     max-width: 200px;
 }
 
-/* --- 3. ПРАВА ПАНЕЛЬ (Чат) --- */
+
 .chat-area {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background: var(--bg-color); /* Твій фірмовий бежевий фон */
+    background: var(--bg-color);
     position: relative;
 }
 
@@ -152,7 +156,7 @@ body {
     display: flex;
     align-items: center;
     height: 60px;
-    background: #fff; /* Шапка біла, щоб виділялась */
+    background: #fff; 
 }
 
 .chat-header-info {
@@ -161,7 +165,7 @@ body {
     margin-left: 10px;
 }
 
-/* Зона повідомлень */
+
 .messages-container {
     flex: 1;
     padding: 20px;
@@ -169,11 +173,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    /* Прибираємо картинку фону, залишаємо твій колір */
+    
     background-color: var(--bg-color); 
 }
 
-/* Бульбашки повідомлень */
+
 .message {
     max-width: 60%;
     padding: 10px 15px;
@@ -183,25 +187,28 @@ body {
     position: relative;
     word-wrap: break-word;
     box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    list-style-type: none;
 }
 
-/* Вхідні (Білі) */
+
 .msg-in {
     align-self: flex-start;
     background: white;
     border-bottom-left-radius: 2px;
     color: #333;
+    border-radius: 8px;
 }
 
-/* Твої повідомлення (Твій колір Whitty) */
+
 .msg-out {
     align-self: flex-end;
-    background: var(--accent-color); /* #d8c3aa */
-    color: #000; /* Чорний текст читається краще на бежевому */
+    background: var(--accent-color);
+    color: #000; 
     border-bottom-right-radius: 2px;
+     border-radius: 8px;
 }
 
-/* --- 4. ЗОНА ВВОДУ --- */
+
 .chat-input-area {
     padding: 15px;
     background: white;
@@ -226,7 +233,7 @@ body {
 }
 
 button {
-    background: var(--accent-color); /* #d8c3aa */
+    background: var(--accent-color); 
     color: #000;
     border: none;
     padding: 10px 25px;
@@ -238,7 +245,7 @@ button {
 }
 
 button:hover {
-    background: var(--accent-hover); /* #c6ad92 */
+    background: var(--accent-hover); 
 }
 
 .no-chat-selected {

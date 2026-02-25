@@ -6,16 +6,17 @@ const {requireAuth} = require("../middleware/authMiddleware")
 router.post("/create-conversation",requireAuth, async (req, res) => {
   const { partner_id } = req.body;
   const myID = req.user.id;
+  const conversationId = req.params.conversationId;
    if(parseInt(partner_id) === parseInt(myID)){ 
     return res.status(403).send('You cant create conversation with yourself')
   }
   try {
     const existingConversation = await prisma.conversation.findFirst({
       where: {
-        AND: {
-          participants: { some: { user_id: parseInt(myID) } },
-          participants: { some: { user_id: parseInt(partner_id) } },
-        },
+        AND: [
+         { participants: { some: { user_id: parseInt(myID) } } },
+         { participants: { some: { user_id: parseInt(partner_id) } } },
+        ],
       },
       include: {
         participants: true,
