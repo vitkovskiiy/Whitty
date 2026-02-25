@@ -127,7 +127,7 @@ io.on("connection", (socket) => {
     console.log(data);
     socket.join(data.conversationId)
     io.to(data.conversationId).emit("new_message", {
-      message: data,
+      message: data.message,
     });
   });
 
