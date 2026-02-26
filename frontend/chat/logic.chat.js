@@ -1,4 +1,4 @@
-const socket = io("http://localhost:8080", {
+const socket = io({
   transports: ["websocket"],
   withCredentials: true,
 });
@@ -30,31 +30,19 @@ socket.on("user_info", (data) => {
   document.getElementById("avatar").src = data.avatar || "/avatars/default.jpg";
 });
 
-socket.on("private-message", function(data) {   
-   messages.append('<li class="private"><em><strong>'+ data.from +' -> '+ data.to +'</strong>: '+ data.msg +'</em></li>');
-});
 
-
-socket.on("new-message", (data) => {
-  
+socket.on("new-message", (incomingData) => {
+  console.log(incomingData);
   const messageElement = document.createElement("li");
-  const avatarImg = document.createElement("img");
-  avatarImg.src = data.avatar || "/avatars/default.jpg";
-  avatarImg.classList.add("msg-out");
-  const usernameSpan = document.createElement("span");
-  usernameSpan.textContent = data.username + ": ";
-  usernameSpan.style.fontWeight = "common";
-  
   const time = new Date().toLocaleTimeString();
-  console.log(time);
 
-  const textSpan = document.createElement("li");
-  textSpan.textContent = data;
-  messageElement.classList.add("msg-in");
- 
-  messageElement.innerHTML = `
-                <span>${textSpan.textContent}</span> 
-            `;
+            if (parseInt(data.myID) === parseInt(incomingData.myID)) {
+              messageElement.classList.add("msg-out");
+            } else {
+              messageElement.classList.add("msg-in");
+            }
+            
+  messageElement.textContent = incomingData.message;
   
 
   messages.appendChild(messageElement);
@@ -101,8 +89,10 @@ async function allUsers() {
           socket.emit("join-room", conversationId)
           headerAvatar.src = partner.avatar; 
           headerAvatar.style = "display: inline-block";
+          console.log(partner);
 
           data.partnerUsername = partner.username;
+          data.partnerId = partner.user_id;
         
           
 

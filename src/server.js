@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const { Server } = require("socket.io");
 const { createServer } = require("http");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
 
 const prisma = require("./repositories/index");
 
@@ -36,6 +37,12 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+app.use(cors({
+    origin: true, 
+    credentials: true, 
+}));
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/avatars",express.static(path.join(__dirname, "../uploads/avatars")));
@@ -137,7 +144,12 @@ io.on("connection", (socket) => {
 
   socket.on("send-message", (data) => {
     console.log(data);
-    io.to(data.conversationId).emit("new-message", data.message);
+    io.to(data.conversationId).emit("new-message", {
+       message: data.message,
+       partnerID: data.partnerId,
+       username: data.partnerUsername,
+       myID: data.myID,
+    });
   })
   
 
