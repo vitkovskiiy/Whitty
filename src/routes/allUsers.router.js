@@ -6,8 +6,6 @@ const {requireAuth} = require("../middleware/authMiddleware")
 
 router.get("/allusers", requireAuth,async (req, res) => {
   const myID = req.user.id;
-  const parse = jwt.decode(myID)
-  console.log(parse);
   const response = await prisma.user.findMany({
     where:{
       user_id: { not: parseInt(myID) }
