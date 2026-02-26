@@ -19,10 +19,16 @@ router.post("/create-conversation",requireAuth, async (req, res) => {
         ],
       },
       include: {
-        participants: true,
+        participants: {
+          select: {
+            user_id: true,
+            username:true,
+            avatar: true,
+          }
+        },
         messages: true,
       },
-    });
+    })
     if (existingConversation) {
       return res.status(200).json({
         message: "Conversation already exists!",
