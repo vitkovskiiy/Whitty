@@ -124,12 +124,22 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (data) => {
     const username = socket.data.username;
     const isOnline = Array.from(onlineUsers.keys()).includes(username);
-    console.log(data);
     socket.join(data.conversationId)
     io.to(data.conversationId).emit("new_message", {
       message: data.message,
     });
   });
+  
+  socket.on("join-room",(roomID) => {
+      socket.join(roomID);  
+      console.log("joined succesfully")
+  })
+
+  socket.on("send-message", (data) => {
+    console.log(data);
+    io.to(data.conversationId).emit("new-message", data.message);
+  })
+  
 
   socket.on("disconnect", () => {
     if (socket.data.username) {
