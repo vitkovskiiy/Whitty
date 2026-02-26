@@ -3,9 +3,7 @@ const requireAuth = (req, res, next) => {
   const token = req.cookies.jwt;
   const handleUnauthorized = () => {
     if (req.originalUrl.startsWith("/api") || req.originalUrl.startsWith("/auth")|| req.originalUrl.startsWith("/chat") ) {
-      return res.status(401).json({ message: "Please autorize yourself" });
-    } else {
-      return res.redirect("/login");
+      return res.redirect("/");
     }
   };
   if (token) {
