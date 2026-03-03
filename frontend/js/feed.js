@@ -2,7 +2,7 @@ async function loadPosts() {
   const container = document.getElementById('posts-container');
 
   try {
-    const response = await fetch("http://localhost:8080/api/post");
+    const response = await fetch("/api/post");
     
     if (!response.ok) {
       throw new Error(`HTTP error! status:${response.status}`);
@@ -99,7 +99,7 @@ async function loadPosts() {
                 const postId = form.getAttribute('data-post-id');
 
                 try {
-                    const res = await fetch("http://localhost:8080/api/comment", { 
+                    const res = await fetch("/api/comment", { 
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({

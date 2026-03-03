@@ -30,7 +30,7 @@ formPost.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch("http://localhost:8080/api/post", {
+    const response = await fetch("/api/post", {
       method: "POST",
       body: formData,
     });
