@@ -1,4 +1,4 @@
-# Whitty — Fullstack Social Network 
+# Whitty —  Social Network 
 
 Whitty is a social network platform designed to demonstrate advanced database concepts, including ACID transactions, pessimistic locking, complex analytical queries, and integration testing with isolated environments.
 
@@ -18,26 +18,6 @@ This project was developed as a coursework assignment.
 ---
 ## <span style="font-size : 40px">👨‍💻</span> **My team : *Ivan Vitkovskiy* (do it by myself)** 
 
-## <span style="font-size : 40px">📋</span> Features & Coursework Requirements
-
-This project implements the following requirements:
-
-1.  **Database Design:**
-    * Normalized schema (3NF) with 5 tables (`Users`, `Posts`, `Comments`, `Follows`, `Countries`).
-    * Proper indexing and foreign key constraints.
-2.  **Transactions :**
-    * **Scenario:** User Registration.
-    * **Logic:** Atomically creates a `User` and links/creates a `Country`. If any step fails, the entire operation rolls back.
-3.  **Concurrency Control :**
-    * **Scenario:** Follow/Unfollow User.
-    * **Logic:** Uses **Pessimistic Locking** (`SELECT ... FOR UPDATE`) via Raw SQL to prevent race conditions when updating the social graph.
-4.  **Complex Analytics :**
-    * **Scenario:** User Engagement Report.
-    * **Logic:** Uses CTEs (Common Table Expressions) and Window Functions (`ROW_NUMBER`) to find top engaged countries and their top authors.
-5.  **Testing :**
-    * Fully isolated integration tests using a separate database (`whitty_test`).
-    * Automatic database setup and teardown.
-
 ---
 
 
@@ -52,32 +32,31 @@ This project implements the following requirements:
 2. Clone and Install
 
 
-2.1 
-git clone [Whitty](https://github.com/1tssayzy/Whitty.git)
-```
-2.2 open cloned repo folder
+Clone the repository and install dependencies:
+```bash
+git clone https://github.com/1tssayzy/Whitty.git
 cd Whitty
-2.3 download all dependencies
 npm install
 ```
+
 3. Environment setup 
 
 **The project comes with a docker-compose configuration for PostgreSQL.**
 
-```
+```bash
 docker compose up -d postgres
 ```
 You need to create (.env) file based on your docker config:
 
-```
+```bash
 DATABASE_URL="postgresql://{login}:{password}@localhost:{own_port}/{db_name}?schema=public"
 ```
 After some set-ups you need to push your db using prisma 
-```
+```bash
 npx prisma migrate dev
 ```
 After all this steps you finally can start the project 
-```
+```bash
 npm start
 ```
 <span style="font-size : 25px">**🧪 Testing :**</span>
