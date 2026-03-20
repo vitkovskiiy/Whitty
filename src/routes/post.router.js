@@ -1,5 +1,4 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const prisma = require("../repositories/index");
 const router = express.Router();
 const { requireAuth } = require("../middleware/authMiddleware");
