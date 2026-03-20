@@ -1,0 +1,7 @@
+model Country {
+  country_id   Int    @id @default(autoincrement())
+  country_name String @unique
+  users        User[]
+
+  @@map("countries")
+}

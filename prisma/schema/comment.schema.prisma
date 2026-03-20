@@ -1,0 +1,11 @@
+model Comment {
+  comment_id   Int       @id @default(autoincrement())
+  post_id      Int
+  user_id      Int
+  comment_text String
+  created_at   DateTime? @db.Timestamp(6)
+  post         Post      @relation(fields: [post_id], references: [post_id])
+  user         User      @relation(fields: [user_id], references: [user_id])
+
+  @@map("comments")
+}
