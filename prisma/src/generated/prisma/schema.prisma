@@ -1,0 +1,118 @@
+model Comment {
+  comment_id   Int       @id @default(autoincrement())
+  post_id      Int
+  user_id      Int
+  comment_text String
+  created_at   DateTime? @db.Timestamp(6)
+  post         Post      @relation(fields: [post_id], references: [post_id])
+  user         User      @relation(fields: [user_id], references: [user_id])
+
+  @@map("comments")
+}
+
+model Conversation {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participants User[]    @relation("ChatParticipants")
+  messages     Message[]
+
+  @@map("conversation")
+}
+
+model Follow {
+  follower_id  Int
+  following_id Int
+  followed_at  DateTime?
+
+  follower  User @relation("FollowerRelation", fields: [follower_id], references: [user_id])
+  following User @relation("FollowingRelation", fields: [following_id], references: [user_id])
+
+  @@id([follower_id, following_id])
+  @@map("followers")
+}
+
+model Like {
+  user_id Int
+  post_id Int
+  user    User @relation(fields: [user_id], references: [user_id])
+  post    Post @relation(fields: [post_id], references: [post_id])
+
+  @@id([user_id, post_id])
+  @@map("likes")
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  senderId Int
+  sender   User @relation("Sender", fields: [senderId], references: [user_id])
+
+  receiverId Int?
+  receiver   User? @relation("Receiver", fields: [receiverId], references: [user_id])
+
+  @@map("message")
+}
+
+model Post {
+  post_id        Int       @id @default(autoincrement())
+  user_id        Int?
+  caption        String?
+  imageUrl       String?
+  content        String?
+  likes_count    Int?      @default(0)
+  comments_count Int?      @default(0)
+  created_at     DateTime? @db.Timestamp(6)
+  user           User?     @relation(fields: [user_id], references: [user_id])
+  comments       Comment[]
+  likes          Like[]
+
+  @@map("posts")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id    Int      @id @default(autoincrement())
+  username   String   @unique @db.VarChar(50)
+  avatar     String   @default("/uploads/avatars/default.png")
+  email      String?  @db.VarChar(100)
+  password   String?  @db.VarChar(220)
+  country_id Int?
+  country    Country? @relation(fields: [country_id], references: [country_id])
+
+  posts    Post[]
+  comments Comment[]
+  likes    Like[]
+
+  followers Follow[] @relation("FollowingRelation")
+  following Follow[] @relation("FollowerRelation")
+
+  messagesSent     Message[]      @relation("Sender")
+  messagesReceived Message[]      @relation("Receiver")
+  conversations    Conversation[] @relation("ChatParticipants")
+
+  @@map("users")
+}
+
+model Country {
+  country_id   Int    @id @default(autoincrement())
+  country_name String @unique
+  users        User[]
+
+  @@map("countries")
+}

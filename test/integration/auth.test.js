@@ -1,6 +1,6 @@
 const request = require('supertest');
 const app = require('../../src/server'); 
-const prisma = require('../../src/repositories/index');
+const prisma = require('../../src/config/prisma.database');
 
 describe('Authentication Integration Tests', () => {
   
@@ -18,9 +18,7 @@ describe('Authentication Integration Tests', () => {
   describe('User Registration (/auth/register)', () => {
     
     it('should register a new user successfully', async () => {
-      const res = await request(app)
-        .post('/auth/register') 
-        .send({
+      const res = await request(app).post('/auth/register').send({
           username: 'test_user',
           password: 'password123' 
         });

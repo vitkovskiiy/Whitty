@@ -82,11 +82,11 @@ async function allUsers() {
 
           
           const responseData = await response.json();
-          const conversationId = responseData.conversation.id;
-          data.conversationId = conversationId;
+        
+          data.conversationId = responseData.conversation.id;
           const chatMessages = responseData.conversation.messages;
           const partner = responseData.conversation.participants.find((user) => user.user_id !== parseInt(data.myID));
-          socket.emit("join-room", conversationId)
+          socket.emit("join-room", data.conversationId)
           headerAvatar.src = partner.avatar; 
           headerAvatar.style = "display: inline-block";
           console.log(partner);

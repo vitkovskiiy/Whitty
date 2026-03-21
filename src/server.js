@@ -9,7 +9,7 @@ const { createServer } = require("http");
 const jwt = require("jsonwebtoken");
 const cors = require('cors');
 
-const prisma = require("./repositories/index");
+const prisma = require("./config/prisma.database");
 
 // Імпорт роутів
 const authRoutes = require("./routes/auth");
@@ -36,8 +36,6 @@ const io = new Server(server, {
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
 
 app.use(cors({
     origin: true, 

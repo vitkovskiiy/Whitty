@@ -1,13 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const prisma = require("../repositories/index");
+const prisma = require("../config/prisma.database");
 const router = express.Router();
 const path = require("path");
 const { requireAuth } = require("../middleware/authMiddleware");
 const postFileMiddleware = require("../middleware/postFileMiddleware");
 
-// ================= РЕГИСТРАЦИЯ =================
+
 router.post("/register", async (req, res) => {
   const { username, password } = req.body; 
 
@@ -50,7 +50,6 @@ router.post("/register", async (req, res) => {
       sameSite: "lax",
     });
 
-    // УСПЕХ -> 201 Created
     res.status(201).json({ 
       message: "User registered successfully", 
       username: newUser.username,
