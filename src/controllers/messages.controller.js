@@ -5,7 +5,6 @@ class MessageController {
     const conversationId = req.params.conversationId;
     const text = req.body.message;
     const senderId = req.user.id;
-    console.log(text);
     const createMessage = await MessageService.createMessage(conversationId, text, senderId);
     res.status(200).json({ message: "Message was delivered" });
   }

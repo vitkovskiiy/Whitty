@@ -8,7 +8,6 @@ const  UploadAvatarService = require("../services/avatar.upload.service")
                 
                 const uploadNewAvatar = await UploadAvatarService.uploadNewAvatar(userId,avatarUrl);
         
-                 
                 res.status(201).json({
                     message: "Avatar updated", 
                     avatar: uploadNewAvatar,

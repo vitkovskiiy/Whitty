@@ -2,7 +2,7 @@ const MessageRepository = require("../repositories/chat.message.repository");
 
 class MessageService {
   async createMessage(conversationId, senderId, text) {
-    console.log(text + "service");
+    
     if (text === "") {
       throw new Error("Text field is empty");
     }

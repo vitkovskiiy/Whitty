@@ -3,8 +3,6 @@ const prisma = require("../config/prisma.database");
 const router = express.Router();
 const { requireAuth } = require("../middleware/authMiddleware");
 
-
-
 router.get("/countries", async (req, res) => {
   try {
     const countries = await prisma.country.findMany({

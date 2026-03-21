@@ -30,20 +30,18 @@ socket.on("user_info", (data) => {
   document.getElementById("avatar").src = data.avatar || "/avatars/default.jpg";
 });
 
-
 socket.on("new-message", (incomingData) => {
   console.log(incomingData);
   const messageElement = document.createElement("li");
   const time = new Date().toLocaleTimeString();
 
-            if (parseInt(data.myID) === parseInt(incomingData.myID)) {
-              messageElement.classList.add("msg-out");
-            } else {
-              messageElement.classList.add("msg-in");
-            }
-            
+  if (parseInt(data.myID) === parseInt(incomingData.myID)) {
+    messageElement.classList.add("msg-out");
+  } else {
+    messageElement.classList.add("msg-in");
+  }
+
   messageElement.textContent = incomingData.message;
-  
 
   messages.appendChild(messageElement);
   messages.scrollTop = messages.scrollHeight;
@@ -80,24 +78,19 @@ async function allUsers() {
             body: JSON.stringify({ partner_id: user.user_id }),
           });
 
-          
           const responseData = await response.json();
-        
+
           data.conversationId = responseData.conversation.id;
           const chatMessages = responseData.conversation.messages;
           const partner = responseData.conversation.participants.find((user) => user.user_id !== parseInt(data.myID));
-          socket.emit("join-room", data.conversationId)
-          headerAvatar.src = partner.avatar; 
+          socket.emit("join-room", data.conversationId);
+          headerAvatar.src = partner.avatar;
           headerAvatar.style = "display: inline-block";
-          console.log(partner);
 
           data.partnerUsername = partner.username;
           data.partnerId = partner.user_id;
-        
-          
 
           headerChatTitle.textContent = partner.username;
-          data.conversationId = conversationId;
           messages.innerHTML = "";
 
           chatMessages.forEach((m) => {
@@ -108,7 +101,7 @@ async function allUsers() {
             } else {
               newMesssage.classList.add("msg-in");
             }
-            
+
             newMesssage.innerHTML = `<span>${m.text}</span>`;
             messages.appendChild(newMesssage);
           });
@@ -130,7 +123,7 @@ formChat.addEventListener("submit", async (e) => {
   if (input.value) {
     data.message = input.value;
     console.log(data);
-    socket.emit("send-message", (data))
+    socket.emit("send-message", data);
     if (data.conversationId !== null) {
       const response = await fetch(`/chat/messages/${data.conversationId}`, {
         method: "POST",
@@ -140,7 +133,7 @@ formChat.addEventListener("submit", async (e) => {
         body: JSON.stringify(data),
       });
     } else {
-       alert("Please select a chat");
+      alert("Please select a chat");
     }
 
     input.value = "";
