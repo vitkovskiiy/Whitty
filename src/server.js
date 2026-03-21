@@ -44,7 +44,7 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/avatars",express.static(path.join(__dirname, "../uploads/avatars")));
-app.use(express.static(path.join(__dirname, "../js")));
+
 
 app.use("/api", postRouter,countryRouter,allUsersRouter,avatarRouter);
 app.use("/auth", authRoutes);

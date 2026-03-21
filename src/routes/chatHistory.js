@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const express = require("express");
 const app = express();
-const prisma = require("../repositories/index");
+const prisma = require("../config/prisma.database");
 
 router.get('/chatHistory', async (req,res) => {
     const myId = req.user.user_id

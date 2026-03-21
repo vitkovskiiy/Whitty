@@ -6,7 +6,6 @@ const  UploadAvatarService = require("../services/avatar.upload.service")
                 const userId = req.user.id;
                 const avatarUrl = `/uploads/avatars/${req.file.filename}`;
                 
-                
                 const uploadNewAvatar = await UploadAvatarService.uploadNewAvatar(userId,avatarUrl);
         
                  

@@ -1,5 +1,5 @@
 .env
 node_modules/
 uploads/
-/src/generated/prisma
+prisma/src/
 package-lock.json
