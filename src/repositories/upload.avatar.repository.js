@@ -9,6 +9,9 @@ class UploadAvatar {
             },
             data: {
                 avatar : avatarUrl
+            },
+            select: {
+                avatar: true,
             }
         })
         return updateAvatar;
