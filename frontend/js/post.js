@@ -26,7 +26,7 @@ formPost.addEventListener("submit", async (e) => {
   formData.append("caption", content );
   formData.append("content", content );
   if (imageFile) {
-    formData.append("image", imageFile);
+    formData.append("post", imageFile);
   }
 
   try {
