@@ -1,35 +1,46 @@
-const prisma = require("../repositories/index");
+const AuthRepository = require("../repositories/auth.repository");
 const bcrypt = require("bcrypt");
+const jwt = require("../utils/jwt.generate");
 
-async function registerUserWithTransaction(login, password, countryName = 'Unknown') {
-  return prisma.$transaction(async (tx) => {
-
-    const foundUser = await tx.user.findUnique({ where: { username: login } });
-    if (foundUser) throw new Error("User Already Exists");
-
-
-    let country = await tx.country.findUnique({ where: { country_name: countryName } });
-    if (!country) {
-      country = await tx.country.create({
-        data: { country_name: countryName },
-      });
+class AuthService {
+  async login(username, password) {
+    if (!username || !password) {
+      throw new Error("Username or Password undefined");
     }
 
-    // Hashing
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = await AuthRepository.login(username);
 
-    const newUser = await tx.user.create({
-      data: {
-        username: login,
-        password: hashedPassword,
-        country_id: country.country_id,
-      },
-    });
-    return tx.user.findUnique({
-      where: { user_id: newUser.user_id },
-      include: { country: true },
-    });
-  });
+    const isMatchPassword = bcrypt.compare(password, user.password);
+
+    if (!isMatchPassword) {
+      throw new Error("Password invalid,please try again");
+    }
+    const token = jwt.generateAccessToken(user.user_id);
+    if (!token) {
+      throw new Error("Error while generate token");
+    }
+
+    return { user, token };
+  }
+
+  async register(username, password) {
+    if (!username || !password) {
+      throw new Error("Username or Password undefined");
+    }
+    if (password.lenght < 8) {
+      throw new Error("Password should be more than 8 words");
+    }
+    const findByUsername = AuthRepository.findByUsername(username);
+    if (!findByUsername) {
+      throw new Error("User already exists");
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const createUser = AuthRepository.createUser(username, hashedPassword);
+    if (!createUser) {
+      throw new Error("Something happened when tried to create user");
+    }
+    return createUser;
+  }
 }
 
-module.exports = { registerUserWithTransaction };
+module.exports = new AuthService();
