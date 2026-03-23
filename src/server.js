@@ -12,6 +12,7 @@ const cors = require("cors");
 const prisma = require("./config/prisma.database");
 
 // Імпорт роутів
+const findMeRouter = require('../src/routes/find.me.routes')
 const registerRouter = require("./routes/register.routes");
 const loginRouter = require("./routes/login.routes");
 const avatarRouter = require("./routes/upload.routes");
@@ -49,7 +50,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/avatars", express.static(path.join(__dirname, "../uploads/avatars")));
 
 app.use("/api", postRouter, countryRouter, allUsersRouter, avatarRouter);
-app.use("/auth", loginRouter);
+app.use("/auth", loginRouter,findMeRouter);
 app.use("/chat", conversationRouter, messagesRouter);
 
 app.get("/", (req, res) => {

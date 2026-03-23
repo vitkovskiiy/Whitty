@@ -1,3 +1,9 @@
+const express = require("express");
+const prisma = require("../config/prisma.database");
+const router = express.Router();
+const {requireAuth} = require("../middleware/authMiddleware")
+
+
 router.get("/me", requireAuth, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
@@ -22,3 +28,5 @@ router.get("/me", requireAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
+module.exports = router;
