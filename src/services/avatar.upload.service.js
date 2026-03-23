@@ -5,7 +5,7 @@ const path = require("path")
 class UploadAvatarService {
   async uploadNewAvatar(userId, avatarUrl) {
     const oldAvatarPath = await UploadAvatar.findOldAvatar(userId);
-  
+    
     if (!oldAvatarPath) {
       throw new Error("User not found");
     }
