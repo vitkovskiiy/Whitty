@@ -7,19 +7,20 @@ const cookieParser = require("cookie-parser");
 const { Server } = require("socket.io");
 const { createServer } = require("http");
 const jwt = require("jsonwebtoken");
-const cors = require('cors');
+const cors = require("cors");
 
 const prisma = require("./config/prisma.database");
 
 // Імпорт роутів
-const authRoutes = require("./routes/auth");
-const avatarRouter = require("./routes/upload.router");
+const registerRouter = require("./routes/register.routes");
+const loginRouter = require("./routes/login.routes");
+const avatarRouter = require("./routes/upload.routes");
 const { requireAuth } = require("./middleware/authMiddleware");
-const postRouter = require("../src/routes/post.router");
-const countryRouter = require("../src/routes/country.router");
-const allUsersRouter = require("../src/routes/allUsers.router")
+const postRouter = require("./routes/post.routes");
+const countryRouter = require("./routes/country.routes");
+const allUsersRouter = require("../src/routes/all.users.routes");
 const conversationRouter = require("./routes/createConversation");
-const messagesRouter = require("./routes/message.routes")
+const messagesRouter = require("./routes/message.routes");
 
 dotenv.config();
 const port = process.env.PORT;
@@ -37,18 +38,19 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-    origin: true, 
-    credentials: true, 
-}));
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  }),
+);
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
-app.use("/avatars",express.static(path.join(__dirname, "../uploads/avatars")));
+app.use("/avatars", express.static(path.join(__dirname, "../uploads/avatars")));
 
-
-app.use("/api", postRouter,countryRouter,allUsersRouter,avatarRouter);
-app.use("/auth", authRoutes);
-app.use("/chat", conversationRouter,messagesRouter)
+app.use("/api", postRouter, countryRouter, allUsersRouter, avatarRouter);
+app.use("/auth", loginRouter);
+app.use("/chat", conversationRouter, messagesRouter);
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public/login.html"));
@@ -125,31 +127,30 @@ io.on("connection", (socket) => {
     username: socket.data.username,
     avatar: socket.data.avatar,
   });
-  
+
   socket.on("sendMessage", (data) => {
     const username = socket.data.username;
     const isOnline = Array.from(onlineUsers.keys()).includes(username);
-    socket.join(data.conversationId)
+    socket.join(data.conversationId);
     io.to(data.conversationId).emit("new_message", {
       message: data.message,
     });
   });
-  
-  socket.on("join-room",(roomID) => {
-      socket.join(roomID);  
-      console.log("joined succesfully")
-  })
+
+  socket.on("join-room", (roomID) => {
+    socket.join(roomID);
+    console.log("joined succesfully");
+  });
 
   socket.on("send-message", (data) => {
     console.log(data);
     io.to(data.conversationId).emit("new-message", {
-       message: data.message,
-       partnerID: data.partnerId,
-       username: data.partnerUsername,
-       myID: data.myID,
+      message: data.message,
+      partnerID: data.partnerId,
+      username: data.partnerUsername,
+      myID: data.myID,
     });
-  })
-  
+  });
 
   socket.on("disconnect", () => {
     if (socket.data.username) {
