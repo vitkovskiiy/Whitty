@@ -22,8 +22,26 @@ class PostRepository {
     //in development
   }
 
-  async allPosts(){
+  async allPosts() {
     //in development
+
+    const allPosts = await prisma.post.findMany({
+      orderBy: { created_at: "desc" },
+      include: {
+        user: {
+          select: { username: true, avatar: true },
+        },
+        comments: {
+          orderBy: { created_at: "asc" },
+          include: {
+            user: {
+              select: { username: true, avatar: true },
+            },
+          },
+        },
+      },
+    });
+    return allPosts;
   }
 }
 module.exports = new PostRepository();

@@ -19,6 +19,11 @@ class PostController {
       });
     }
   }
+
+  async getAllPost(req,res) {
+    const getAllPost = await PostService.getAllPosts()
+    return getAllPost;
+  }
 }
 
 module.exports = new PostController();

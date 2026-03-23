@@ -3,7 +3,6 @@ const express = require("express");
 const router = express.Router();
 const { requireAuth } = require("../middleware/authMiddleware");
 const postFileMiddleware = require("../middleware/postFileMiddleware");
-
 const PostController = require("../controllers/post.controller")
 
 router.post("/post", requireAuth,postFileMiddleware.single('post'),PostController.createPost)
@@ -36,30 +35,8 @@ router.post("/comment", requireAuth, async (req, res) => {
   }
 });
 
-router.get("/post", async (req, res) => {
-  try {
-    const posts = await prisma.post.findMany({
-      orderBy: { created_at: "desc" },
-      include: {
-        user: {
-          select: { username: true, avatar: true },
-        },
-        comments: {
-          orderBy: { created_at: "asc" },
-          include: {
-            user: {
-              select: { username: true, avatar: true },
-            },
-          },
-        },
-      },
-    });
-    res.json(posts);
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Error fetching posts" });
-  }
-});
+router.get("/post", PostController.getAllPost)
+
 
 router.post("/like", requireAuth, async (req, res) => {
   const { post_id } = req.body;
