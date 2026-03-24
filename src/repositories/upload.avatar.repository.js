@@ -1,6 +1,5 @@
 const prisma = require("../config/prisma.database");
 
-
 class UploadAvatar {
     async saveAvatar(userId,avatarUrl){
         const updateAvatar = await prisma.user.update({
