@@ -9,7 +9,7 @@ async function loadPosts() {
     }
 
     const posts = await response.json();
-    console.log(posts)
+    console.log(posts);
     container.innerHTML = "";
     
     posts.forEach((post) => {

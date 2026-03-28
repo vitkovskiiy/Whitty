@@ -5,7 +5,7 @@ class PostRepository {
     const createPost = await prisma.post.create({
       data: {
         user_id: userId,
-        imageUrl: imageUrl,
+        imageUrl: `/uploads/posts/${imageUrl}`,
         caption: caption,
         content: content,
         created_at: new Date(),
@@ -102,8 +102,8 @@ class PostRepository {
         where: { post_id: Number(post_id) },
         data: { likes_count: { decrement: 1 } },
       });
-      return deleteLike;
     });
+    return deleteLike;
   }
 }
 module.exports = new PostRepository();

@@ -3,7 +3,7 @@ const PostService = require("../services/post.service");
 class PostController {
   async createPost(req, res) {
     console.log(req.file);
-    const avatarUrl = req.file.path;
+    const avatarUrl = req.file.filename;
     const userId = req.user.id;
     const { content, caption } = req.body;
 
