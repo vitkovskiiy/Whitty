@@ -1,3 +1,4 @@
+require("dotenv").config();
 const prisma = require("../config/prisma.database");
 
 async function main() {
@@ -12,16 +13,16 @@ async function main() {
   ];
 
   for (const country of countries) {
-  await prisma.country.upsert({
-    where: { 
-      country_name: country.name 
-    },
-    update: {}, 
-    create: {
-      country_name:country.name,
-    },
-  });
-}
+    await prisma.country.upsert({
+      where: {
+        country_name: country.name,
+      },
+      update: {},
+      create: {
+        country_name: country.name,
+      },
+    });
+  }
 
   console.log("Countries are uploaded successfully");
 }

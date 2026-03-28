@@ -4,9 +4,9 @@ const router = express.Router();
 const {requireAuth} = require("../middleware/authMiddleware")
 
 router.post("/create-conversation",requireAuth, async (req, res) => {
+  //in progress to refactoring
   const { partner_id } = req.body;
   const myID = req.user.id;
-  const conversationId = req.params.conversationId;
    if(parseInt(partner_id) === parseInt(myID)){ 
     return res.status(403).send('You cant create conversation with yourself')
   }

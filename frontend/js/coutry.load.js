@@ -18,7 +18,6 @@ async function initCountrySettings() {
     const userRes = await fetch("/auth/me");
     if (userRes.ok) {
       const user = await userRes.json();
-
       if (user.country) {
         currentCountryDisplay.textContent = user.country.country_name;
         countrySelect.value = user.country.country_id;
@@ -45,7 +44,8 @@ saveCountryBtn.addEventListener("click", async () => {
 
     if (res.ok) {
       const data = await res.json();
-      currentCountryDisplay.textContent = data.user.country.country_name;
+      console.log(data);
+      currentCountryDisplay.textContent = data.country.country_name;
       alert("✅ Country updated successfully!");
     } else {
       alert("❌ Error updating country");
