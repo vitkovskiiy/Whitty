@@ -5,30 +5,34 @@ const {requireAuth} = require("../middleware/authMiddleware")
 
 router.post("/create-conversation",requireAuth, async (req, res) => {
   //in progress to refactoring
+  //in progress to refactoring
+  //in progress to refactoring
+  //in progress to refactoring
+  //in progress to refactoring
   const { partner_id } = req.body;
   const myID = req.user.id;
-   if(parseInt(partner_id) === parseInt(myID)){ 
-    return res.status(403).send('You cant create conversation with yourself')
+  if (parseInt(partner_id) === parseInt(myID)) {
+    return res.status(403).send("You cant create conversation with yourself");
   }
   try {
     const existingConversation = await prisma.conversation.findFirst({
       where: {
         AND: [
-         { participants: { some: { user_id: parseInt(myID) } } },
-         { participants: { some: { user_id: parseInt(partner_id) } } },
+          { participants: { some: { user_id: parseInt(myID) } } },
+          { participants: { some: { user_id: parseInt(partner_id) } } },
         ],
       },
       include: {
         participants: {
           select: {
             user_id: true,
-            username:true,
+            username: true,
             avatar: true,
-          }
+          },
         },
         messages: true,
       },
-    })
+    });
     if (existingConversation) {
       return res.status(200).json({
         message: "Conversation already exists!",
@@ -38,7 +42,10 @@ router.post("/create-conversation",requireAuth, async (req, res) => {
       const conversation = await prisma.conversation.create({
         data: {
           participants: {
-            connect: [{ user_id: parseInt(myID) }, { user_id: parseInt(partner_id) }],
+            connect: [
+              { user_id: parseInt(myID) },
+              { user_id: parseInt(partner_id) },
+            ],
           },
         },
         include: {
@@ -53,3 +60,7 @@ router.post("/create-conversation",requireAuth, async (req, res) => {
   }
 });
 module.exports = router;
+//in progress to refactoring
+//in progress to refactoring
+//in progress to refactoring
+//in progress to refactoring
