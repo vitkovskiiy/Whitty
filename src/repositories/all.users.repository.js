@@ -2,7 +2,7 @@ const prisma = require("../config/prisma.database");
 
 class UsersRepository {
   async fetchAll(myId) {
-    const findAll = prisma.user.findMany({
+    const findAll = await prisma.user.findMany({
       where: {
         user_id: {
           not: parseInt(myId),

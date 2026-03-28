@@ -2,7 +2,7 @@ const CountryService = require("../repositories/country.repository.js");
 
 class CountryController {
   async loadCountries(req, res) {
-    const loadCountries = CountryService.loadCountries();
+    const loadCountries = await CountryService.loadCountries();
     if (!loadCountries) {
       res.status(500).json({
         message: "Failed load countries",
@@ -22,6 +22,7 @@ class CountryController {
     }
     res.status(200).json({
       message: "Country was updated successfully",
+      country: setCountry.country,
     });
   }
 }

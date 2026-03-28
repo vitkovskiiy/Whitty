@@ -16,7 +16,7 @@ class UsersController {
     async findMe(req,res){
       const user_id = req.user.id;
 
-      const findMe = UsersService.findMe(user_id)
+      const findMe = await UsersService.findMe(user_id)
       if(!findMe){
          return res.status(404).json({ message: "User not found" });
       }
