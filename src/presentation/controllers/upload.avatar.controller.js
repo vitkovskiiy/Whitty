@@ -1,4 +1,4 @@
-const UploadAvatarService = require("../services/avatar.upload.service");
+const UploadAvatarService = require("../../application/services/avatar.upload.service");
 
 class UploadController {
   async uploadAvatar(req, res) {

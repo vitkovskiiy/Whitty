@@ -1,4 +1,4 @@
-const MessageService = require("../services/message.service");
+const MessageService = require("../../application/services/message.service")
 
 class MessageController {
   async createMessage(req, res) {

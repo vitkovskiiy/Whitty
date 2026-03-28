@@ -1,4 +1,4 @@
-const PostRepository = require("../repositories/post.repository");
+const PostRepository = require("../../infrastructure/repositories/post.repository");
 
 class PostService {
   async createPost(userId, imageUrl, caption, content) {

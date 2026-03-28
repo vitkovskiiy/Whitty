@@ -1,4 +1,4 @@
-const UsersRepository = require("../repositories/all.users.repository");
+const UsersRepository = require("../../infrastructure/repositories/all.users.repository");
 
 class UsersService {
   async fetchAll(myId) {

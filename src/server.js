@@ -8,19 +8,19 @@ const { createServer } = require("http");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 
-const prisma = require("./config/prisma.database");
+const prisma = require("./infrastructure/config/prisma.database");
 
 // Імпорт роутів
-const findMeRouter = require('../src/routes/find.me.routes')
-const registerRouter = require("./routes/register.routes");
-const loginRouter = require("./routes/login.routes");
-const avatarRouter = require("./routes/upload.routes");
-const { requireAuth } = require("./middleware/authMiddleware");
-const postRouter = require("./routes/post.routes");
-const countryRouter = require("./routes/country.routes");
-const allUsersRouter = require("../src/routes/all.users.routes");
-const conversationRouter = require("./routes/createConversation");
-const messagesRouter = require("./routes/message.routes");
+const findMeRouter = require('./presentation/routes/find.me.routes')
+const registerRouter = require("./presentation/routes/register.routes");
+const loginRouter = require("./presentation/routes/login.routes");
+const avatarRouter = require("./presentation/routes/upload.routes");
+const { requireAuth } = require("./presentation/middleware/authMiddleware");
+const postRouter = require("./presentation/routes/post.routes");
+const countryRouter = require("./presentation/routes/country.routes");
+const allUsersRouter = require("./presentation/routes/all.users.routes");
+const conversationRouter = require("./presentation/routes/createConversation");
+const messagesRouter = require("./presentation/routes/message.routes");
 
 dotenv.config();
 const port = process.env.PORT;

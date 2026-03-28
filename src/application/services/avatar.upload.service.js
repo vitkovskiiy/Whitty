@@ -1,4 +1,4 @@
-const UploadAvatar = require("../repositories/upload.avatar.repository");
+const UploadAvatar = require("../../infrastructure/repositories/upload.avatar.repository");
 const fs = require("fs");
 const path = require("path")
 

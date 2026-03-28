@@ -1,4 +1,4 @@
-const CountryRepository = require("../repositories/country.repository.js");
+const CountryRepository = require("../../infrastructure/repositories/country.repository");
 
 class CountryService {
   async loadCountries() {

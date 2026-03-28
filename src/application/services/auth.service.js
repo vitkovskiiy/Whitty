@@ -1,6 +1,6 @@
-const AuthRepository = require("../repositories/auth.repository");
+const AuthRepository = require("../../infrastructure/repositories/auth.repository");
 const bcrypt = require("bcrypt");
-const jwt = require("../utils/jwt.generate");
+const jwt = require("../../infrastructure/utils/jwt.generate");
 
 class AuthService {
   async login(username, password) {

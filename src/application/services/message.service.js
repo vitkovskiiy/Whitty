@@ -1,4 +1,4 @@
-const MessageRepository = require("../repositories/chat.message.repository");
+const MessageRepository = require("../../infrastructure/repositories/chat.message.repository");
 
 class MessageService {
   async createMessage(conversationId, senderId, text) {

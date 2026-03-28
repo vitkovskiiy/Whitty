@@ -1,4 +1,4 @@
-const PostService = require("../services/post.service");
+const PostService = require("../../application/services/post.service");
 
 class PostController {
   async createPost(req, res) {
