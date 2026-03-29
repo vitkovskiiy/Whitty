@@ -49,7 +49,7 @@ app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/avatars", express.static(path.join(__dirname, "../uploads/avatars")));
 
 app.use("/api", postRouter, countryRouter, allUsersRouter, avatarRouter);
-app.use("/auth", loginRouter,findMeRouter);
+app.use("/auth", loginRouter,findMeRouter,registerRouter);
 app.use("/chat", conversationRouter, messagesRouter);
 
 app.get("/", (req, res) => {
