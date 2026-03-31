@@ -8,7 +8,7 @@ class AuthService {
     if (!username || !password) {
       throw new Error("Username or Password undefined");
     }
-
+    console.log(username,password);
     const user = await AuthRepository.login(username);
     if (!user) {
       throw new Error("Can't find user");
@@ -23,7 +23,7 @@ class AuthService {
     if (!token) {
       throw new Error("Error while generate token");
     }
-    const mappedUser = await UserMapper.toDomain(user);
+    const mappedUser = UserMapper.toDomain(user);
     return { mappedUser, token };
   }
 
@@ -39,7 +39,7 @@ class AuthService {
       throw new Error("User already exists");
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const createUser = await AuthRepository.createUser(username, hashedPassword);
+    const createUser = await AuthRepository.register(username, hashedPassword);
     if (!createUser) {
       throw new Error("Something happened when tried to create user");
     }

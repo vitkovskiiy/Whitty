@@ -3,9 +3,7 @@ const prisma = require("../config/prisma.database");
 class AuthRepository {
   async login(username) {
     const login = await prisma.user.findUnique({
-      where: {
-        username: username,
-      },
+      where: { username: username },
   })
   return login;
 }

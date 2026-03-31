@@ -8,6 +8,7 @@ class AuthController {
     if(!user){
       res.status(500).json({ message: "Server throwed error while logging" });
     }
+    console.log(user);
     
     res.cookie("jwt", user.token, {
       httpOnly: true,
@@ -19,7 +20,7 @@ class AuthController {
 
   async register(req,res){
     const { username, password } = req.body;
-    const regiterUser = await AuthService.register(username,password)
+    const regiterUser = await AuthService.register(username,password);
     if(!regiterUser) {
       res.status(500).json({ message: "Server throwed error while register user" });
     }
@@ -27,6 +28,8 @@ class AuthController {
       httpOnly: true,
       maxAge: 60 * 60 * 1000,
     });
+    res.status(200).json({ message: "Register successful", redirect: "/profile" });
+  
   }
 }
 

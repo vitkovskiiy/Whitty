@@ -6,7 +6,6 @@ jest.mock('fileMiddleware')
   body
 });
 
-// Create a fake response
  const mockResponse = () => {
   const res = {};
   res.status = jest.fn().mockReturnValue(res);
@@ -16,7 +15,6 @@ jest.mock('fileMiddleware')
 
 test('should be fail throw large file size', () => {
   const file = new MockFile({ name: 'test.png', type: 'image/png', size: 500000 });
-  const fileMiddleware.single(file)
   expect(input.files[0]).toBe(file);
   expect(input.files).toHaveLength(1);
 });

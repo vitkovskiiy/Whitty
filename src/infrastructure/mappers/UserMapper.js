@@ -11,9 +11,10 @@ class UserMapper {
     }
     static toPersistence(domainUser) {
     return {
+      id: domainUser.id,
       username: domainUser.username,
-      email: domainUser.email,
       avatar: domainUser.avatar,
+
     };
   }
 }
