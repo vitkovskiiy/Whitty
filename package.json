@@ -7,7 +7,7 @@
     "test": "npx prisma generate && jest",
     "test:integration": "jest",
     "start": "nodemon src/server.js",
-    "seed:countries": "node src/seeds/seed.country.js"
+    "seed:countries": "node src/infrastructure/seeds/seed.country.js"
   },
   "keywords": [],
   "author": "",

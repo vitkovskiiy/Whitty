@@ -1,6 +1,8 @@
 const countrySelect = document.getElementById("countrySelect");
 const saveCountryBtn = document.getElementById("saveCountryBtn");
-const currentCountryDisplay = document.getElementById("current-country-display");
+const currentCountryDisplay = document.getElementById(
+  "current-country-display",
+);
 
 async function initCountrySettings() {
   try {
@@ -14,19 +16,19 @@ async function initCountrySettings() {
       option.textContent = c.country_name;
       countrySelect.appendChild(option);
     });
-
-    const userRes = await fetch("/auth/me");
-    if (userRes.ok) {
-      const user = await userRes.json();
-      if (user.country) {
-        currentCountryDisplay.textContent = user.country.country_name;
-        countrySelect.value = user.country.country_id;
-      } else {
-        currentCountryDisplay.textContent = "Not set";
-      }
-    }
   } catch (err) {
     console.error("Error loading country data:", err);
+  }
+}
+async function getUserCountry() {
+  const userRes = await fetch("/auth/me");
+  const user = await userRes.json();
+
+  if (user) {
+    currentCountryDisplay.textContent = user.country_name;
+    countrySelect.value = user.country_id;
+  } else {
+    currentCountryDisplay.textContent = "Not set";
   }
 }
 
@@ -56,7 +58,5 @@ saveCountryBtn.addEventListener("click", async () => {
   }
 });
 
-
-
-
 initCountrySettings();
+getUserCountry();
