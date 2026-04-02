@@ -2,14 +2,15 @@ const AuthRepository = require("../../infrastructure/repositories/auth.repositor
 const bcrypt = require("bcrypt");
 const jwt = require("../../infrastructure/utils/jwt.generate");
 const UserMapper = require("../../infrastructure/mappers/UserMapper")
+const {UserAlreadyExistsError,InvalidPasswordError,TokenCreateError} = require("../../domain/error");
 
 class AuthService {
   async login(username, password) {
     if (!username || !password) {
       throw new Error("Username or Password undefined");
     }
-    console.log(username,password);
     const user = await AuthRepository.login(username);
+    
     if (!user) {
       throw new Error("Can't find user");
     }
@@ -17,11 +18,11 @@ class AuthService {
     const isMatchPassword = await bcrypt.compare(password, user.password);
 
     if (!isMatchPassword) {
-      throw new Error("Password invalid,please try again");
+      throw new InvalidPasswordError("Password invalid,please try again");
     }
     const token = await jwt.generateAccessToken(user.user_id);
     if (!token) {
-      throw new Error("Error while generate token");
+      throw new TokenCreateError("Error while generate token");
     }
     const mappedUser = UserMapper.toDomain(user);
     return { mappedUser, token };
@@ -36,7 +37,7 @@ class AuthService {
     }
     const findByUsername = await AuthRepository.findByUsername(username);
     if (findByUsername) {
-      throw new Error("User already exists");
+      throw new UserAlreadyExistsError("User already exists");
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const createUser = await AuthRepository.register(username, hashedPassword);

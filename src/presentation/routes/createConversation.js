@@ -12,7 +12,7 @@ router.post("/create-conversation",requireAuth, async (req, res) => {
   const { partner_id } = req.body;
   const myID = req.user.id;
   if (parseInt(partner_id) === parseInt(myID)) {
-    return res.status(403).send("You cant create conversation with yourself");
+    return res.status(403).send("You can't create conversation with yourself");
   }
   try {
     const existingConversation = await prisma.conversation.findFirst({

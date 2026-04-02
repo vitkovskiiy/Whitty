@@ -7,12 +7,7 @@ class UsersRepository {
         user_id: {
           not: parseInt(myId),
         },
-      },
-      select: {
-        user_id: true,
-        avatar: true,
-        username: true,
-      },
+      }
     });
     return findAll;
   }
@@ -21,12 +16,10 @@ class UsersRepository {
       where: {
         user_id: user_id,
       },
-      select: {
-        user_id: true,
-        username: true,
-        avatar: true,
-        country: true,
-      },
+      include: {
+        country:true,
+      }
+      
     });
     return user
   }

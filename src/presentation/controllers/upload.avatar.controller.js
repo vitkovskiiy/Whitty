@@ -5,6 +5,7 @@ class UploadController {
     try {
       const userId = req.user.id;
       const avatarUrl = `/uploads/avatars/${req.file.filename}`;
+      console.log(avatarUrl)
 
       const uploadNewAvatar = await UploadAvatarService.uploadNewAvatar(
         userId,
