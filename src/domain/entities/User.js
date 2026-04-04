@@ -6,6 +6,14 @@ class User {
    this.country_id = country_id,
    this.country_name = country_name);
   }
+
+  async getUsername(){
+  
+  }
+
+  async getUserCountryName(){
+    return this.country_name
+  }
 }
 
 module.exports = User;

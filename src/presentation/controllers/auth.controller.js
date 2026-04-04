@@ -1,12 +1,13 @@
 const AuthService = require("../../application/services/auth.service");
-const RegisterUserDTO = require("../dto/RegisterUserDTO");
+const RegisterUserDTO = require("../dto/requests/RegisterUserDto");
+const LoginUserDTO = require("../dto/requests/LoginUserDto");
 const { DomainError, NotFoundError } = require("../../domain/error");
 
 class AuthController {
   async login(req, res) {
     try {
-      const dto = await new RegisterUserDTO(req.body);
-      const validateUser = await dto.validate();
+      const LoginDto = await new LoginUserDTO(req.body);
+      const validateUser = await LoginDto.validate();
       const user = await AuthService.login(
         validateUser.username,
         validateUser.password,
@@ -17,9 +18,7 @@ class AuthController {
         maxAge: 60 * 60 * 1000,
       });
 
-      res
-        .status(200)
-        .json({ message: "Login successful", redirect: "/profile" });
+      res.status(200).json({ message: "Login successful", redirect: "/profile" });
     } catch (error) {
       if (error instanceof NotFoundError) {
         res.status(404).json({ message: error.message });
@@ -46,9 +45,7 @@ class AuthController {
         httpOnly: true,
         maxAge: 60 * 60 * 1000,
       });
-      res
-        .status(200)
-        .json({ message: "Register successful", redirect: "/profile" });
+      res.status(200).json({ message: "Register successful", redirect: "/profile" });
     } catch (error) {
       if (error instanceof NotFoundError) {
         res.status(404).json({ message: error.message });
