@@ -1,13 +1,15 @@
 const UsersService = require("../../application/services/all.users.service");
 const { DomainError, NotFoundError } = require("../../domain/error");
-const OutputUserDTO = require("../../presentation/dto/outputUserDTO")
+const OutputUserDTO = require("../dto/response/outputUserDTO");
 
 class UsersController {
   async allUsers(req, res) {
     try {
       const myId = req.user.id;
       const allUsers = await UsersService.fetchAll(myId);
-      const parseUserFormat = allUsers.map(user => OutputUserDTO.fromDomain(user));
+      const parseUserFormat = allUsers.map((user) =>
+        OutputUserDTO.fromDomain(user),
+      );
       res.status(200).json(parseUserFormat);
     } catch (error) {
       if (error instanceof DomainError) {
@@ -16,7 +18,7 @@ class UsersController {
       if (error instanceof NotFoundError) {
         return res.status(404).json({ message: error.message });
       }
-      
+
       console.error("[Controller] Unexpected error:", error);
       return res.status(500).json({ message: "Error on server side" });
     }

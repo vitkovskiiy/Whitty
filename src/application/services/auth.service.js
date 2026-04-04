@@ -2,7 +2,7 @@ const AuthRepository = require("../../infrastructure/repositories/auth.repositor
 const bcrypt = require("bcrypt");
 const jwt = require("../../infrastructure/utils/jwt.generate");
 const UserMapper = require("../../infrastructure/mappers/UserMapper")
-const {UserAlreadyExistsError,InvalidPasswordError,TokenCreateError} = require("../../domain/error");
+const {DomainError,NotFoundError} = require("../../domain/error");
 
 class AuthService {
   async login(username, password) {
