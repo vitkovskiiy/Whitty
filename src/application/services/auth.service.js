@@ -2,13 +2,10 @@ const AuthRepository = require("../../infrastructure/repositories/auth.repositor
 const bcrypt = require("bcrypt");
 const jwt = require("../../infrastructure/utils/jwt.generate");
 const UserMapper = require("../../infrastructure/mappers/UserMapper")
-const {UserAlreadyExistsError,InvalidPasswordError,TokenCreateError} = require("../../domain/error");
+const {} = require("../../domain/error");
 
 class AuthService {
   async login(username, password) {
-    if (!username || !password) {
-      throw new Error("Username or Password undefined");
-    }
     const user = await AuthRepository.login(username);
     
     if (!user) {

@@ -26,7 +26,7 @@ class PostController {
   async getAllPost(req, res) {
     try {
       const getAllPost = await PostService.getAllPosts();
-      res.status.json(getAllPost);
+      res.status(200).json(getAllPost);
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(404).json({ message: error.message });

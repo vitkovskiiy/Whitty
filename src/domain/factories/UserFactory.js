@@ -1,7 +1,7 @@
-const User = require("../models/User");
+const User = require("../entities/User");
 
 class UserFactory {
-  static createNew({ username, avatar = "/uploads/avatars/default.png" }) {
+  static createNew(username, avatar = "/uploads/avatars/default.png") {
     return new User({
       id: null,
       username: username,
@@ -10,8 +10,14 @@ class UserFactory {
       country_name:null,
     });
   }
-  static reconstitute({ id, username, avatar,country_id,country_name }) {
-    return new User({ id, username, avatar, country_id, country_name });
+  static reconstitute(prismaData) {
+    return new User({ 
+      id: prismaData.id,
+      username: prismaData.username, 
+      avatar: prismaData.avatar, 
+      country_id: prismaData.country_id,
+      country_name: prismaData.country_name 
+    });
   }
 }
 module.exports = UserFactory;

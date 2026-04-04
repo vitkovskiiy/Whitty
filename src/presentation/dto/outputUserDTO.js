@@ -5,7 +5,7 @@ class OutputUserDTO {
       name: user.username,
       avatar: user.avatar,
       country_id: user.country_id,
-      country_name: user.country.country_name,
+      country_name: user.country_name,
     };
   }
 }
