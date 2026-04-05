@@ -13,6 +13,9 @@ class LoginUserDTO {
     if (!this.password) {
       throw new DomainError("Password is required");
     }
+    if(this.password.length < 7 ){
+      throw new DomainError("Password should be more than 7 chars");
+    }
 
     return { username: this.username, password: this.password };
   }

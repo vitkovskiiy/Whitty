@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../../../prisma/src/generated/prisma/client");
+const { PrismaClient } = require("../../../prisma/generated/prisma/client");
 let prisma;
 
 if (process.env.NODE_ENV === "production") {

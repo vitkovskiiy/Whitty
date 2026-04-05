@@ -4,17 +4,16 @@ class RegisterUserDTO {
   constructor(data) {
     this.username = data.username ? data.username.trim() : null;
     this.password = data.password;
-  }
 
-  validate() {
     if (!this.username) {
       throw new DomainError("Username is required");
     }
     if (!this.password) {
       throw new DomainError("Password is required");
     }
-
-    return { username: this.username, password: this.password };
+    if(this.password.length < 7 ){
+      throw new DomainError("Password should be more than 7 chars");
+    }
   }
 }
 
