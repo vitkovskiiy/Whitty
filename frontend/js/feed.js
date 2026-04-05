@@ -16,7 +16,7 @@ async function loadPosts() {
       const postElement = document.createElement("div");
       postElement.className = "post-card";
       const date = new Date(post.created_at).toLocaleString();
-      const authorAvatar = post.user ? post.user.avatar : "/uploads/avatars/default.png";
+      const authorAvatar = post.user ? post.user.avatar : "/uploads/avatars/default.jpg";
       const authorUsername = post.user ? post.user.username : "Unknown";
 
       const postImageHTML = post.imageUrl

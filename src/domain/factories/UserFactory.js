@@ -1,7 +1,7 @@
 const User = require("../entities/User");
 
 class UserFactory {
-  static createNew(username, avatar = "/uploads/avatars/default.png") {
+  static createNew(username, avatar = "/uploads/avatars/default.jpg") {
     return new User({
       id: null,
       username: username,

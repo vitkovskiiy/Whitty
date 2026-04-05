@@ -63,10 +63,11 @@ async function allUsers() {
     allUsersListContainter.innerHTML = "";
 
     users.forEach((user) => {
+      console.log(user);
       const userDiv = document.createElement("div");
       userDiv.classList.add("user-item");
       userDiv.innerHTML = `
-          <img src="${user.avatar || "/uploads/imgSite/default.png"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
+          <img src="${user.avatar || "/uploads/imgSite/default.jpg"}" alt="Avatar" class="avatar" width="40" height="40" style="border-radius: 50%; margin-right: 8px;">
           <span class="username">${user.username}</span>
       `;
 
@@ -75,14 +76,14 @@ async function allUsers() {
           const response = await fetch("create-conversation", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ partner_id: user.user_id }),
+            body: JSON.stringify({ partner_id: user.id }),
           });
 
           const responseData = await response.json();
 
           data.conversationId = responseData.conversation.id;
           const chatMessages = responseData.conversation.messages;
-          const partner = responseData.conversation.participants.find((user) => user.user_id !== parseInt(data.myID));
+          const partner = responseData.conversation.participants.find((user) => user.id !== parseInt(data.myID));
           socket.emit("join-room", data.conversationId);
           headerAvatar.src = partner.avatar;
           headerAvatar.style = "display: inline-block";
