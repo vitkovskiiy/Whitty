@@ -7,9 +7,9 @@ model Post {
   likes_count    Int?      @default(0)
   comments_count Int?      @default(0)
   created_at     DateTime? @db.Timestamp(6)
-  user           User?     @relation(fields: [user_id], references: [user_id])
   comments       Comment[]
   likes          Like[]
+  user           User?     @relation(fields: [user_id], references: [user_id])
 
   @@map("posts")
 }

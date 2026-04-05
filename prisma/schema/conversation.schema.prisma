@@ -1,10 +1,9 @@
 model Conversation {
-  id        String   @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  participants User[]    @relation("ChatParticipants")
+  id           String    @id @default(uuid())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
   messages     Message[]
+  participants User[]    @relation("ChatParticipants")
 
   @@map("conversation")
 }

@@ -1,21 +1,18 @@
 model User {
-  user_id    Int      @id @default(autoincrement())
-  username   String   @unique @db.VarChar(50)
-  avatar     String   @default("/uploads/avatars/default.png")
-  email      String?  @db.VarChar(100)
-  password   String?  @db.VarChar(220)
-  country_id Int?
-  country    Country? @relation(fields: [country_id], references: [country_id])
-
-  posts    Post[]
-  comments Comment[]
-  likes    Like[]
-
-  followers Follow[] @relation("FollowingRelation")
-  following Follow[] @relation("FollowerRelation")
-
-  messagesSent     Message[]      @relation("Sender")
+  user_id          Int            @id @default(autoincrement())
+  username         String         @unique @db.VarChar(50)
+  avatar           String         @default("/uploads/avatars/default.png")
+  email            String?        @db.VarChar(100)
+  password         String?        @db.VarChar(220)
+  country_id       Int?
+  comments         Comment[]
+  following        Follow[]       @relation("FollowerRelation")
+  followers        Follow[]       @relation("FollowingRelation")
+  likes            Like[]
   messagesReceived Message[]      @relation("Receiver")
+  messagesSent     Message[]      @relation("Sender")
+  posts            Post[]
+  country          Country?       @relation(fields: [country_id], references: [country_id])
   conversations    Conversation[] @relation("ChatParticipants")
 
   @@map("users")

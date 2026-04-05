@@ -2,9 +2,8 @@ model Follow {
   follower_id  Int
   following_id Int
   followed_at  DateTime?
-
-  follower  User @relation("FollowerRelation", fields: [follower_id], references: [user_id])
-  following User @relation("FollowingRelation", fields: [following_id], references: [user_id])
+  follower     User      @relation("FollowerRelation", fields: [follower_id], references: [user_id])
+  following    User      @relation("FollowingRelation", fields: [following_id], references: [user_id])
 
   @@id([follower_id, following_id])
   @@map("followers")

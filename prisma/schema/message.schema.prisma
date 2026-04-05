@@ -1,16 +1,13 @@
 model Message {
-  id        Int      @id @default(autoincrement())
-  text      String
-  createdAt DateTime @default(now())
-
+  id             Int          @id @default(autoincrement())
+  text           String
+  createdAt      DateTime     @default(now())
   conversationId String
+  senderId       Int
+  receiverId     Int?
   conversation   Conversation @relation(fields: [conversationId], references: [id])
-
-  senderId Int
-  sender   User @relation("Sender", fields: [senderId], references: [user_id])
-
-  receiverId Int?
-  receiver   User? @relation("Receiver", fields: [receiverId], references: [user_id])
+  receiver       User?        @relation("Receiver", fields: [receiverId], references: [user_id])
+  sender         User         @relation("Sender", fields: [senderId], references: [user_id])
 
   @@map("message")
 }

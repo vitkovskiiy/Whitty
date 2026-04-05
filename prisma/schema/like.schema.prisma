@@ -1,8 +1,8 @@
 model Like {
   user_id Int
   post_id Int
-  user    User @relation(fields: [user_id], references: [user_id])
   post    Post @relation(fields: [post_id], references: [post_id])
+  user    User @relation(fields: [user_id], references: [user_id])
 
   @@id([user_id, post_id])
   @@map("likes")
