@@ -8,6 +8,7 @@ class DomainError extends Error {
 class NotFoundError extends DomainError {}
 class ValidationError extends DomainError {}
 
+
 module.exports = {
   DomainError,
   NotFoundError,

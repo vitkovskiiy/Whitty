@@ -21,6 +21,9 @@ const countryRouter = require("./presentation/routes/country.routes");
 const allUsersRouter = require("./presentation/routes/all.users.routes");
 const conversationRouter = require("./presentation/routes/createConversation");
 const messagesRouter = require("./presentation/routes/message.routes");
+const errorMiddleware = require("./presentation/middleware/error.middleware");
+
+
 
 dotenv.config();
 const port = process.env.PORT;
@@ -34,6 +37,9 @@ const io = new Server(server, {
   },
 });
 
+
+
+app.use(errorMiddleware)
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -44,6 +50,8 @@ app.use(
     credentials: true,
   }),
 );
+
+
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
 app.use("/avatars", express.static(path.join(__dirname, "../uploads/avatars")));
@@ -104,7 +112,7 @@ io.use(async (socket, next) => {
       socket.data.avatar = user.avatar;
       socket.data.username = user.username;
     } else {
-      socket.data.avatar = "/uploads/avatars/default.png";
+      socket.data.avatar = "/uploads/avatars/default.jpg";
       socket.data.username = "Anonymous";
     }
     next();
