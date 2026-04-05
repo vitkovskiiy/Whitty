@@ -1,44 +1,26 @@
 const UsersService = require("../../application/services/all.users.service");
-const { DomainError, NotFoundError } = require("../../domain/error");
 const OutputUserDTO = require("../dto/response/outputUserDTO");
 
 class UsersController {
-  async allUsers(req, res) {
+  async allUsers(req, res, next) {
     try {
       const myId = req.user.id;
       const allUsers = await UsersService.fetchAll(myId);
-      const parseUserFormat = allUsers.map((user) =>
-        OutputUserDTO.fromDomain(user),
-      );
-      res.status(200).json(parseUserFormat);
+      const parsedUsers = allUsers.map((user) => OutputUserDTO.fromDomain(user));
+      res.status(200).json(parsedUsers);
     } catch (error) {
-      if (error instanceof DomainError) {
-        return res.status(409).json({ message: error.message });
-      }
-      if (error instanceof NotFoundError) {
-        return res.status(404).json({ message: error.message });
-      }
-
-      console.error("[Controller] Unexpected error:", error);
-      return res.status(500).json({ message: "Error on server side" });
+      next(error);
     }
   }
-  async findMe(req, res) {
+
+  async findMe(req, res, next) {
     try {
       const user_id = req.user.id;
       const me = await UsersService.findMe(user_id);
-      const safeUser = await OutputUserDTO.fromDomain(me);
+      const safeUser = OutputUserDTO.fromDomain(me);
       res.status(200).json(safeUser);
     } catch (error) {
-      if (error instanceof DomainError) {
-        return res.status(409).json({ message: error.message });
-      }
-      if (error instanceof NotFoundError) {
-        return res.status(404).json({ message: error.message });
-      }
-
-      console.error("[Controller] Unexpected error:", error);
-      return res.status(500).json({ message: "Error on server side" });
+      next(error);
     }
   }
 }
